@@ -1,4 +1,4 @@
-from python_dbm import Context
+from "../python_dbm" import Context
 c = Context(["x", "y", "z"], "c") 
 a = (c.x < 10) & (c.x - c.y > 1)
 b = (c.x < 20)
