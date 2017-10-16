@@ -1,4 +1,6 @@
-from "../python_dbm" import Context
+import sys
+sys.path.insert(0, '../')
+from python_dbm import Context
 c = Context(["x", "y", "z"], "c") 
 a = (c.x < 10) & (c.x - c.y > 1)
 b = (c.x < 20)
