@@ -1,0 +1,10 @@
+# DO NOT DELETE
+
+Base64Coder.o: /home/caktus/bin/UPPAAL-dbm-2.0.8/modules/include/io/Base64Coder.h
+Connection.o: /home/caktus/bin/UPPAAL-dbm-2.0.8/modules/include/io/Connection.h
+License.o: /home/caktus/bin/UPPAAL-dbm-2.0.8/modules/include/io/Connection.h
+License.o: /home/caktus/bin/UPPAAL-dbm-2.0.8/modules/include/io/License.h
+License.o: /home/caktus/bin/UPPAAL-dbm-2.0.8/modules/include/base/platform.h
+License.o: /home/caktus/bin/UPPAAL-dbm-2.0.8/modules/include/base/inttypes.h
+License.o: /home/caktus/bin/UPPAAL-dbm-2.0.8/modules/include/config.h
+License.o: /home/caktus/bin/UPPAAL-dbm-2.0.8/modules/include/io/Base64Coder.h
