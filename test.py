@@ -1,7 +1,7 @@
 import sys
 sys.path.insert(0, '../')
 from python_dbm import Context
-x = Context(["x", "y", "z"], "c") 
+c = Context(["x", "y", "z"], "d") 
 a = (c.x < 10) & (c.x - c.y > 1)
 b = (c.x < 20)
 print a <= b    # is a included in b
