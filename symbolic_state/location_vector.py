@@ -1,4 +1,7 @@
 class LocationVector(list):
+    def __init__(self, iterable):
+        super(LocationVector, self).__init__(iterable)
+
     def __le__(self, other):
             for location, otherlocation in self, other:
                 if otherlocation != '*' and location != otherlocation:
