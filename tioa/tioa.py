@@ -1,3 +1,7 @@
+import sys
+sys.path.insert(0, '../test/')
+from udbm import Constraint
+
 class TIOA:
     def __init__(self, locations, initial_location, clocks, edges, actions_input, actions_output, invariants):
         self.locations = locations
@@ -23,3 +27,11 @@ class Edge:
         self.guard = guard
         self.reset = reset  # reset is a set of clocks that will be reset over the edge
         self.target_location = target_location  # is the s' in s -> s'
+
+class Guard:
+    """TIOA representation of a Guard, with TIOA specific functionality"""
+    def __init__(self, x, y, n, isStrict):
+        self.x = x
+        self.y = y
+        self.n = n
+        self.constraint = Constraint(x, y, n, isStrict)
