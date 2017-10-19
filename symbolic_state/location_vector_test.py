@@ -1,12 +1,16 @@
 import unittest
 from location_vector import *
 
-class LocationVectorTest(unittest.TestCase):
-    p = LocationVector([1, 2])
-    q = LocationVector([1, '*'])
-    r = LocationVector(['*', 1])
 
-    def StrictIn(self):
+class LocationVectorTest(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        self.p = LocationVector([1, 2])
+        self.q = LocationVector([1, '*'])
+        self.r = LocationVector(['*', 1])
+
+    def test_strictIn(self):
         self.assertFalse(self.p < self.p)
         self.assertTrue(self.p < self.q)
         self.assertFalse(self.p < self.r)
@@ -17,7 +21,7 @@ class LocationVectorTest(unittest.TestCase):
         self.assertFalse(self.r < self.q)
         self.assertFalse(self.r < self.r)
 
-    def In(self):
+    def test_in(self):
         self.assertTrue(self.p <= self.p)
         self.assertTrue(self.p <= self.q)
         self.assertFalse(self.p <= self.r)
@@ -28,7 +32,7 @@ class LocationVectorTest(unittest.TestCase):
         self.assertFalse(self.r <= self.q)
         self.assertTrue(self.r <= self.r)
 
-    def RevStrictIn(self):
+    def test_revstrictin(self):
         self.assertFalse(self.p > self.p)
         self.assertFalse(self.p > self.q)
         self.assertFalse(self.p > self.r)
@@ -39,7 +43,7 @@ class LocationVectorTest(unittest.TestCase):
         self.assertFalse(self.r > self.q)
         self.assertFalse(self.r > self.r)
 
-    def RevIn(self):
+    def test_revin(self):
         self.assertTrue(self.p >= self.p)
         self.assertFalse(self.p >= self.q)
         self.assertFalse(self.p >= self.r)
