@@ -10,7 +10,7 @@ class LocationVectorTest(unittest.TestCase):
         cls.q = LocationVector([1, '*'])
         cls.r = LocationVector(['*', 1])
 
-    def test_strictIn(self):
+    def test_strictin(self):
         self.assertFalse(self.p < self.p)
         self.assertTrue(self.p < self.q)
         self.assertFalse(self.p < self.r)
