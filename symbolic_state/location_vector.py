@@ -3,7 +3,7 @@ class LocationVector(list):
         super(LocationVector, self).__init__(iterable)
 
     def __le__(self, other):
-            for location, otherlocation in self, other:
+            for location, otherlocation in zip(self, other):
                 if otherlocation != '*' and location != otherlocation:
                     return False
             return True
