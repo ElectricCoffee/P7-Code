@@ -54,5 +54,6 @@ class LocationVectorTest(unittest.TestCase):
         self.assertFalse(self.r >= self.q)
         self.assertTrue(self.r >= self.r)
 
+
 if __name__ == '__main__':
     unittest.main()
