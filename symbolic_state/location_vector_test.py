@@ -1,6 +1,7 @@
 import unittest
 from location_vector import *
 
+
 class LocationVectorTest(unittest.TestCase):
     p = LocationVector([1, 2])
     q = LocationVector([1, '*'])
