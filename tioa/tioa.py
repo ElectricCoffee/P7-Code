@@ -28,11 +28,14 @@ class Edge:
         self.reset = reset  # reset is a set of clocks that will be reset over the edge
         self.target_location = target_location  # is the s' in s -> s'
 
-class Guard(Constraint):
+class Guard:
     """TIOA representation of a Guard, with TIOA specific functionality"""
     def __init__(self, arg1, arg2, val, isStrict):
-        super(Guard, self).__init__(arg1, arg2, val, isStrict)
         self.x = arg1
         self.y = arg2
         self.n = val
         self.isStrict = isStrict
+        self.constraint = Constraint(arg1, arg2, val, isStrict)
+
+    def __and__(self, c, v):
+        pass
