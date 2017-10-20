@@ -35,3 +35,5 @@ class Guard(Constraint):
         self.x = x
         self.y = y
         self.n = n
+        self.isStrict = isStrict
+        self.constraint = Constraint(x, y, n, isStrict)
