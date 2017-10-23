@@ -62,3 +62,7 @@ class Guard:
         """Gets all the clocks in ops."""
         return map(lambda ops: ops[0], self.ops)
 
+    def values(self):
+        """Gets all the values in ops."""
+        return map(lambda ops: ops[1], self.ops)
+
