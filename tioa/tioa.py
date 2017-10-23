@@ -54,3 +54,7 @@ class Guard:
         """Converts the clocks and values into a list of federations."""
         return map(Guard._tuple_to_federation, ops)
             
+    def to_federation(self):
+        """Converts all the clocks and values into a single federation."""
+        return reduce(lambda x, y: x & y, self.to_federations())
+
