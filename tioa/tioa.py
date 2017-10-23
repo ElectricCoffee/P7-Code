@@ -37,3 +37,20 @@ class Guard:
         *ops --  a list of tuples of the form (clock, value, relation).
         """
         self.ops = ops
+
+    @staticmethod
+    def _tuple_to_federation(op):
+        """Converts a single tuple to a federation.
+
+        op -- a tuple of the form (clock, value, relation), where relation is a boolean
+        """
+        (clock, value, is_strict) = op
+        if is_strict:
+            return clock <= value
+        else:
+            return clock < value
+
+    def to_federations(self):
+        """Converts the clocks and values into a list of federations."""
+        return map(Guard._tuple_to_federation, ops)
+            
