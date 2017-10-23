@@ -58,3 +58,7 @@ class Guard:
         """Converts all the clocks and values into a single federation."""
         return reduce(lambda x, y: x & y, self.to_federations())
 
+    def clocks(self):
+        """Gets all the clocks in ops."""
+        return map(lambda ops: ops[0], self.ops)
+
