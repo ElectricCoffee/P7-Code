@@ -36,6 +36,3 @@ class Guard:
         self.n = val
         self.isStrict = isStrict
         self.constraint = Constraint(arg1, arg2, val, isStrict)
-
-    def __and__(self, c, v):
-        pass
