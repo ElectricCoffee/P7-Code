@@ -1,5 +1,5 @@
 import unittest
-from location_vector import *
+from symbolic_state.location_vector import *
 
 
 class LocationVectorTest(unittest.TestCase):
@@ -53,7 +53,6 @@ class LocationVectorTest(unittest.TestCase):
         self.assertFalse(self.r >= self.p)
         self.assertFalse(self.r >= self.q)
         self.assertTrue(self.r >= self.r)
-
 
 if __name__ == '__main__':
     unittest.main()
