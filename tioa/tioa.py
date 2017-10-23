@@ -30,9 +30,3 @@ class Edge:
 
 class Guard:
     """TIOA representation of a Guard, with TIOA specific functionality"""
-    def __init__(self, arg1, arg2, val, isStrict):
-        self.x = arg1
-        self.y = arg2
-        self.n = val
-        self.isStrict = isStrict
-        self.constraint = Constraint(arg1, arg2, val, isStrict)
