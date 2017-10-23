@@ -2,6 +2,8 @@ import sys
 sys.path.insert(0, '../test/')
 import udbm
 
+from numbers import Number
+
 class TIOA:
     def __init__(self, locations, initial_location, clocks, edges, actions_input, actions_output, invariants):
         self.locations = locations
@@ -34,9 +36,24 @@ class Guard:
     def __init__(self, *ops):
         """Initialises the Guard
 
-        *ops --  a list of tuples of the form (clock, value, relation).
+        *ops -- a list of tuples of the form (clock, value, relation).
         """
+        # assert that all the tuples in ops are valid
+        assert(all(map(Guard.is_valid_op, ops)))
+        
         self.ops = ops
+
+    @staticmethod
+    def is_valid_op(op):
+        """Checks if an ops-triple is valid.
+
+        op -- A triple of the form (clock, value, relation)
+        """
+        (clock, value, relation) = op
+        
+        return  isinstance(clock, Clock) \
+            and isinstance(value, Number) \
+            and isinstance(relation, bool)
 
     @staticmethod
     def _tuple_to_federation(op):
