@@ -30,3 +30,10 @@ class Edge:
 
 class Guard:
     """TIOA representation of a Guard, with TIOA specific functionality"""
+    
+    def __init__(self, *ops):
+        """Initialises the Guard
+
+        *ops --  a list of tuples of the form (clock, value, relation).
+        """
+        self.ops = ops
