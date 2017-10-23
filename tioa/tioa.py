@@ -66,3 +66,9 @@ class Guard:
         """Gets all the values in ops."""
         return map(lambda ops: ops[1], self.ops)
 
+    def relations(self):
+        """Gets all the relations in ops. 
+
+        Relations are booleans, true if <=, and false if <.
+        """
+        return map(lambda ops: ops[2], self.ops)
