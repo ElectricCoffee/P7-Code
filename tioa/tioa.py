@@ -1,6 +1,9 @@
 import sys
 sys.path.insert(0, '../test/')
-from udbm import Constraint
+import udbm
+
+from numbers import Number
+from itertools import groupby
 
 class TIOA:
     def __init__(self, locations, initial_location, clocks, edges, actions_input, actions_output, invariants):
@@ -30,9 +33,85 @@ class Edge:
 
 class Guard:
     """TIOA representation of a Guard, with TIOA specific functionality"""
-    def __init__(self, x, y, n, isStrict):
-        self.x = x
-        self.y = y
-        self.n = n
-        self.isStrict = isStrict
-        self.constraint = Constraint(x, y, n, isStrict)
+
+    # tuple indices to avoid magic numbers
+    _clock    = 0
+    _value    = 1
+    _relation = 2
+    _relations = ['<', '<=', '>', '>=']
+    
+    def __init__(self, *ops):
+        """Initialises the Guard
+
+        *ops -- a list of tuples of the form (clock, value, relation).
+        """
+        # assert that all the tuples in ops are valid
+        assert(all(map(Guard.is_valid_op, ops)))
+        
+        self.ops = ops
+
+    @staticmethod
+    def is_valid_op(op):
+        """Checks if an ops-triple is valid.
+
+        op -- A triple of the form (clock, value, relation)
+        """
+        (clock, value, relation) = op
+        
+        return  isinstance(clock, Clock) \
+            and isinstance(value, Number) \
+            and isinstance(relation, str) \
+            and relation in _relations
+
+    @staticmethod
+    def _tuple_to_federation(op):
+        """Converts a single tuple to a federation.
+
+        op -- a tuple of the form (clock, value, relation), where relation in _relations
+        """
+        (clock, value, relation) = op
+        
+        if relation == '<':
+            return clock < value
+        elif relation == '<=':
+            return clock <= value
+        elif relation == '>':
+            return clock > value
+        elif relation == '>=':
+            return clock >= value
+        else:
+            raise LookupError('The provided relation is not valid.')
+
+    def to_federations(self):
+        """Converts the clocks and values into a list of federations."""
+        return map(Guard._tuple_to_federation, ops)
+            
+    def to_federation(self):
+        """Converts all the clocks and values into a single federation."""
+        return reduce(lambda x, y: x & y, self.to_federations())
+
+    def clocks(self):
+        """Gets all the clocks in ops."""
+        return map(lambda op: op[self._clock], self.ops)
+
+    def values(self):
+        """Gets all the values in ops."""
+        return map(lambda op: op[self._value], self.ops)
+
+    def relations(self):
+        """Gets all the relations in ops."""
+        return map(lambda op: op[self._relation], self.ops)
+
+    def max_clock_values(self):
+        """Returns a table of the maximum value for each clock in the guard"""
+        # ask sorted and groupby to only check the clock part of the triple
+        clock      = lambda op: op[self._clock]
+        # groupby doesn't work well on unsorted lists, this part is a must
+        sorted_ops = sorted(self.ops, key = clock)
+        max_clocks = {}
+
+        for key, group in groupby(sorted_ops, key = clock):
+            max_clocks[key] = max([op[self._value] for op in group])
+
+        return max_clocks
+        
