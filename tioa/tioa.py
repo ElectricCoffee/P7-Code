@@ -3,6 +3,7 @@ sys.path.insert(0, '../test/')
 import udbm
 
 from numbers import Number
+from itertools import groupby
 
 class TIOA:
     def __init__(self, locations, initial_location, clocks, edges, actions_input, actions_output, invariants):
@@ -94,3 +95,17 @@ class Guard:
         Relations are booleans, true if <=, and false if <.
         """
         return map(lambda op: op[self._is_strict], self.ops)
+
+    def max_clock_values(self):
+        """Returns a table of the maximum value for each clock in the guard"""
+        # ask sorted and groupby to only check the clock part of the triple
+        clock      = lambda op: op[self._clock]
+        # groupby doesn't work well on unsorted lists, this part is a must
+        sorted_ops = sorted(self.ops, key = clock)
+        max_clocks = {}
+
+        for key, group in groupby(sorted_ops, key = clock):
+            max_clocks[key] = max([op[self._value] for op in group])
+
+        return max_clocks
+        
