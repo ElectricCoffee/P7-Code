@@ -35,9 +35,10 @@ class Guard:
     """TIOA representation of a Guard, with TIOA specific functionality"""
 
     # tuple indices to avoid magic numbers
-    _clock     = 0
-    _value     = 1
-    _is_strict = 2
+    _clock    = 0
+    _value    = 1
+    _relation = 2
+    _relations = ['<', '<=', '>', '>=']
     
     def __init__(self, *ops):
         """Initialises the Guard
@@ -59,19 +60,27 @@ class Guard:
         
         return  isinstance(clock, Clock) \
             and isinstance(value, Number) \
-            and isinstance(relation, bool)
+            and isinstance(relation, str) \
+            and relation in _relations
 
     @staticmethod
     def _tuple_to_federation(op):
         """Converts a single tuple to a federation.
 
-        op -- a tuple of the form (clock, value, relation), where relation is a boolean
+        op -- a tuple of the form (clock, value, relation), where relation in _relations
         """
-        (clock, value, is_strict) = op
-        if is_strict:
-            return clock <= value
-        else:
+        (clock, value, relation) = op
+        
+        if relation == '<':
             return clock < value
+        elif relation == '<=':
+            return clock <= value
+        elif relation == '>':
+            return clock > value
+        elif relation == '>=':
+            return clock >= value
+        else:
+            raise LookupError('The provided relation is not valid.')
 
     def to_federations(self):
         """Converts the clocks and values into a list of federations."""
@@ -90,11 +99,8 @@ class Guard:
         return map(lambda op: op[self._value], self.ops)
 
     def relations(self):
-        """Gets all the relations in ops. 
-
-        Relations are booleans, true if <=, and false if <.
-        """
-        return map(lambda op: op[self._is_strict], self.ops)
+        """Gets all the relations in ops."""
+        return map(lambda op: op[self._relation], self.ops)
 
     def max_clock_values(self):
         """Returns a table of the maximum value for each clock in the guard"""
