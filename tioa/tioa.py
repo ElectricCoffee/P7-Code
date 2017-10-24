@@ -32,6 +32,11 @@ class Edge:
 
 class Guard:
     """TIOA representation of a Guard, with TIOA specific functionality"""
+
+    # tuple indices to avoid magic numbers
+    _clock     = 0
+    _value     = 1
+    _is_strict = 2
     
     def __init__(self, *ops):
         """Initialises the Guard
@@ -77,15 +82,15 @@ class Guard:
 
     def clocks(self):
         """Gets all the clocks in ops."""
-        return map(lambda ops: ops[0], self.ops)
+        return map(lambda op: op[self._clock], self.ops)
 
     def values(self):
         """Gets all the values in ops."""
-        return map(lambda ops: ops[1], self.ops)
+        return map(lambda op: op[self._value], self.ops)
 
     def relations(self):
         """Gets all the relations in ops. 
 
         Relations are booleans, true if <=, and false if <.
         """
-        return map(lambda ops: ops[2], self.ops)
+        return map(lambda op: op[self._is_strict], self.ops)
