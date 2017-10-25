@@ -22,6 +22,23 @@ class TIOA:
             and edge.reset <= self.clocks \
             and edge.target_location in self.locations
 
+    def max_clock_values(self): # This method is costly, estimated between O(n^3) and O(n^5)
+        """Gets the maximum clock value for each clock, based on the maximum clock values in the guards"""
+        dict = {k: [] for k in self.clocks} # initialise a dictionary using every clock as the keys
+        guards = map(lambda edge: edge.guard, self.edges)
+
+        # transfer all the max-values of all the guards to the dict table
+        for guard in guards:    # todo: find a nicer way to do this
+            mcv = guard.max_clock_values()
+            for clock, max_value in mcv.iteritems():
+                dict[clock] = dict[clock].append(max_value)
+
+        # destructively iterate over the dict table, and insert the maximum max_value
+        for clock, max_values in dict.iteritems():
+            dict[clock] = max(max_values)
+
+        return dict
+
 
 class Edge:
     def __init__(self, initial_location, action, guard, reset, target_location):
@@ -35,9 +52,10 @@ class Guard:
     """TIOA representation of a Guard, with TIOA specific functionality"""
 
     # tuple indices to avoid magic numbers
-    _clock    = 0
-    _value    = 1
-    _relation = 2
+    _clock     = 0
+    _value     = 1
+    _relation  = 2
+    # a list of legal relations
     _relations = ['<', '<=', '>', '>=']
     
     def __init__(self, *ops):
