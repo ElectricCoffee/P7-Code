@@ -1,6 +1,6 @@
-import sys
-sys.path.insert(0, '../test/')
-from udbm import Constraint
+#import sys
+#sys.path.insert(0, '../test/')
+from test.udbm import Constraint
 
 class TIOA:
     def __init__(self, locations, initial_location, clocks, edges, actions_input, actions_output, invariants):
