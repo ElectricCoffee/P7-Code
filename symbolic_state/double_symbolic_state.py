@@ -1,4 +1,5 @@
-from location_vector import *
+from test.udbm import Federation
+from symbolic_state.location_vector import LocationVector
 
 
 class DoubleSymbolicState:
