@@ -6,14 +6,16 @@ from numbers import Number
 from itertools import groupby
 
 class TIOA:
+    """TIOA: Timed Input/Output Automaton"""
+    
     def __init__(self, locations, initial_location, clocks, edges, actions_input, actions_output, invariants):
         self.locations = locations
         self.initial_location = initial_location
         self.clocks = clocks  # clocks is a set of clocks
-        self.edges = edges
+        self.edges = edges    # edges is a list of Edges
         self.actions_input = actions_input
         self.actions_output = actions_output
-        self.invariants = invariants
+        self.invariants = invariants # invariants are dictionaries with locations as keys, and guards as values
 
     def is_valid_edge(self, edge):
         return \
