@@ -8,19 +8,19 @@ from itertools import groupby
 class TIOA:
     """TIOA: Timed Input/Output Automaton"""
     
-    def __init__(self, locations, initial_location, clocks, edges, actions_input, actions_output, invariants):
-        self.locations = locations
-        self.initial_location = initial_location
-        self.clocks = clocks  # clocks is a set of clocks
-        self.edges = edges    # edges is a list of Edges
-        self.actions_input = actions_input
-        self.actions_output = actions_output
+    def __init__(self, locations, initial_location, clocks, edges, input_actions, output_actions, invariants):
+        self.locations = locations               # a set of location identifiers, descirbing nodes in the tioa
+        self.initial_location = initial_location # a location in the set of locations
+        self.clocks = clocks               # clocks is a set of clocks (constructed via Context)
+        self.edges = edges                 # edges is a list of Edges
+        self.input_actions = input_actions   # set of input actions
+        self.output_actions = output_actions # set of output actions
         self.invariants = invariants # invariants are dictionaries with locations as keys, and guards as values
 
     def is_valid_edge(self, edge):
         return \
             edge.initial_location in self.locations \
-            and (edge.action in self.actions_output or edge.action in self.actions_input) \
+            and (edge.action in self.output_actions or edge.action in self.input_actions) \
             and edge.reset <= self.clocks \
             and edge.target_location in self.locations
 
