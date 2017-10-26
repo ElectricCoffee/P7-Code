@@ -9,5 +9,32 @@ class DoubleSymbolicState:
         self.zone = zone
 
     @staticmethod
-    def k_equivalence(k, zone, other_zone):
-        pass
+    def k_equivalence(k, u1, u2):
+        """k is a set of clocks, and
+        u1 and u2 is federations and returns if they are equal in the dimensions in k"""
+        for x in k:
+            if not (u1.context.hasClockByName(x) and u2.context.hasClockByName(x)):
+                return False
+
+        # finding the different clocks in u1 and u2
+        u1_minus_k = diff(u1, k)
+        u2_minus_k = diff(u2, k)
+
+        # freeing the unshared clocks in u1 and k
+        for c in u1_minus_k:
+            u1.freeClock(c)
+        # freeing the unshared clocks in u2 and k
+        for c in u2_minus_k:
+            u2.freeClock(c)
+
+        # returning the comparison of the modified u1 and u2
+        return u1 == u2
+
+
+def diff(u1, k):
+    """u1 and u2 is a federation, and returns the set diffrences between u1 and u2's clocks"""
+    result = []
+    for c in k:
+        if not (u1.context.hasClockByName(c)):
+            result.append(c)
+    return result
