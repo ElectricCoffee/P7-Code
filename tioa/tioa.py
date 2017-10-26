@@ -9,13 +9,24 @@ class TIOA:
     """TIOA: Timed Input/Output Automaton"""
     
     def __init__(self, locations, initial_location, clocks, edges, input_actions, output_actions, invariants):
-        self.locations = locations               # a set of location identifiers, descirbing nodes in the tioa
-        self.initial_location = initial_location # a location in the set of locations
-        self.clocks = clocks               # clocks is a set of clocks (constructed via Context)
-        self.edges = edges                 # edges is a list of Edges
-        self.input_actions = input_actions   # set of input actions
-        self.output_actions = output_actions # set of output actions
-        self.invariants = invariants # invariants are dictionaries with locations as keys, and guards as values
+        """Constructor for the Timed Input/Output Automaton
+
+        Keyword Arguments:
+        locations -- a set of location identifiers, descirbing nodes in the tioa
+        initial_location -- a location in the set of locations
+        clocks -- clocks is a set of clocks (constructed via Context)
+        edges -- edges is a list of Edges
+        input_actions -- set of input actions
+        output_actions -- set of output actions
+        invariants -- dictionaries with locations as keys, and guards as values
+        """
+        self.locations = locations
+        self.initial_location = initial_location
+        self.clocks = clocks
+        self.edges = edges
+        self.input_actions = input_actions
+        self.output_actions = output_actions
+        self.invariants = invariants
 
     def is_valid_edge(self, edge):
         return \
