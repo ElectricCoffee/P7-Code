@@ -24,7 +24,7 @@ class TIOA:
             and edge.reset <= self.clocks \
             and edge.target_location in self.locations
 
-    def max_clock_values(self): # This method is costly, estimated between O(n^3) and O(n^5)
+    def max_clock_values(self):
         """Gets the maximum clock value for each clock, based on the maximum clock values in the edges and invariants"""
         clock_table = {k: [] for k in self.clocks} # initialise a dictionary using every clock as the keys
         guards = [edge.guard for edge in self.edges] + [guard for guard in self.invariants.values()]
