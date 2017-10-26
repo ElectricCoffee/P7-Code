@@ -6,22 +6,51 @@ from numbers import Number
 from itertools import groupby
 
 class TIOA:
-    def __init__(self, locations, initial_location, clocks, edges, actions_input, actions_output, invariants):
+    """TIOA: Timed Input/Output Automaton"""
+    
+    def __init__(self, locations, initial_location, clocks, edges, input_actions, output_actions, invariants):
+        """Constructor for the Timed Input/Output Automaton
+
+        Keyword Arguments:
+        locations -- a set of location identifiers, descirbing nodes in the tioa
+        initial_location -- a location in the set of locations
+        clocks -- clocks is a set of clocks (constructed via Context)
+        edges -- edges is a list of Edges
+        input_actions -- set of input actions
+        output_actions -- set of output actions
+        invariants -- dictionaries with locations as keys, and guards as values
+        """
         self.locations = locations
         self.initial_location = initial_location
-        self.clocks = clocks  # clocks is a set of clocks
+        self.clocks = clocks
         self.edges = edges
-        self.actions_input = actions_input
-        self.actions_output = actions_output
+        self.input_actions = input_actions
+        self.output_actions = output_actions
         self.invariants = invariants
 
     def is_valid_edge(self, edge):
         return \
             edge.initial_location in self.locations \
-            and (edge.action in self.actions_output or edge.action in self.actions_input) \
+            and (edge.action in self.output_actions or edge.action in self.input_actions) \
             and edge.reset <= self.clocks \
             and edge.target_location in self.locations
 
+    def max_clock_values(self):
+        """Gets the maximum clock value for each clock, based on the maximum clock values in the edges and invariants"""
+        clock_table = {k: [] for k in self.clocks} # initialise a dictionary using every clock as the keys
+        guards = [edge.guard for edge in self.edges] + [guard for guard in self.invariants.values()]
+
+        # transfer all the max-values of all the guards to the dict table
+        for guard in guards:    # todo: find a nicer way to do this
+            mcv = guard.max_clock_values()
+            for clock, max_value in mcv.iteritems():
+                clock_table[clock] = clock_table[clock].append(max_value)
+
+        # destructively iterate over the dict table, and insert the maximum max_value
+        for clock, max_values in clock_table.iteritems():
+            clock_table[clock] = max(max_values)
+
+        return clock_table
 
 class Edge:
     def __init__(self, initial_location, action, guard, reset, target_location):
@@ -35,9 +64,10 @@ class Guard:
     """TIOA representation of a Guard, with TIOA specific functionality"""
 
     # tuple indices to avoid magic numbers
-    _clock    = 0
-    _value    = 1
-    _relation = 2
+    _clock     = 0
+    _value     = 1
+    _relation  = 2
+    # a list of legal relations
     _relations = ['<', '<=', '>', '>=']
     
     def __init__(self, *ops):
