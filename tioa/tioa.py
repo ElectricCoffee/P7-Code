@@ -26,8 +26,8 @@ class TIOA:
 
     def max_clock_values(self): # This method is costly, estimated between O(n^3) and O(n^5)
         """Gets the maximum clock value for each clock, based on the maximum clock values in the guards"""
-        guards = map(lambda edge: edge.guard, self.edges)
         clock_table = {k: [] for k in self.clocks} # initialise a dictionary using every clock as the keys
+        guards = [edge.guard for edge in self.edges] + [guard for guard in self.invariants.values()]
 
         # transfer all the max-values of all the guards to the dict table
         for guard in guards:    # todo: find a nicer way to do this
