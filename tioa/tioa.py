@@ -1,6 +1,4 @@
-import sys
-sys.path.insert(0, '../test/')
-import udbm
+from test.udbm import Clock
 
 from numbers import Number
 from itertools import groupby
