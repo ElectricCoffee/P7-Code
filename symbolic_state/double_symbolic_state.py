@@ -19,7 +19,9 @@ class DoubleSymbolicState:
         u2 = other.zone
 
         for clock in k:
-            if not (u1.context.hasClockByName(clock) and u2.context.hasClockByName(clock)):
+            if not u1.context.hasClockByName(clock):
+                return False
+            elif not u2.context.hasClockByName(clock):
                 return False
 
         # finding the different clocks in u1 and u2
