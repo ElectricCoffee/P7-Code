@@ -1,8 +1,8 @@
 import unittest
-import double_symbolic_state
+from double_symbolic_state import *
 import sys
 sys.path.insert(0, '../test/')
-import udbm
+from udbm import *
 
 class double_symbolic_state_test(unittest.TestCase):
 
@@ -14,9 +14,9 @@ class double_symbolic_state_test(unittest.TestCase):
         cls.zone2 = (cls.c.x < 3) & (cls.c.x > 2) & (cls.c.y < 5) & (cls.c.y > 1) & (cls.c.z < 8)
         cls.zone3 = (cls.c.x < 3) & (cls.c.x > 2) & (cls.c.y < 5) & (cls.c.y > 1) & (cls.c.z < 8) & (cls.c.w > 2) & (cls.c.w < 8)
 
-        cls.dss1 = double_symbolic_state(None, cls.zone1)
-        cls.dss2 = double_symbolic_state(None, cls.zone2)
-        cls.dss3 = double_symbolic_state(None, cls.zone3)
+        cls.dss1 = DoubleSymbolicState(None, cls.zone1)
+        cls.dss2 = DoubleSymbolicState(None, cls.zone2)
+        cls.dss3 = DoubleSymbolicState(None, cls.zone3)
 
     def test_m_eqiavalens(self):
         x = self.c.items[0]
@@ -31,3 +31,7 @@ class double_symbolic_state_test(unittest.TestCase):
         self.assertFalse(self.dss1.k_equivalence(self.dss2, [x, y, z, w]))
         self.assertTrue(self.dss2.k_equivalence(self.dss3, [x, y, z]))
         self.assertFalse(self.dss2.k_equivalence(self.dss3, [x, y, z, w]))
+
+
+if __name__ == '__main__':
+    unittest.main()

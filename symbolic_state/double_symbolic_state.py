@@ -1,5 +1,8 @@
-from test.udbm import Federation
-from symbolic_state.location_vector import LocationVector
+import sys
+sys.path.insert(0, '../test/')
+from udbm import *
+sys.path.insert(0, '../symbolic_state/')
+from location_vector import *
 
 
 class DoubleSymbolicState:
