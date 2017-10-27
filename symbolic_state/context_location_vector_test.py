@@ -1,5 +1,4 @@
 import unittest
-from .context_location_vector import *
 from tioa.tioa import TIOA
 from tioa.automata_context import AutomataContext
 
