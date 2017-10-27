@@ -1,5 +1,4 @@
-from ..test.udbm import Clock
-
+from .test.udbm import Clock
 from numbers import Number
 from itertools import groupby
 
