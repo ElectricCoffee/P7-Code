@@ -23,14 +23,14 @@ class double_symbolic_state_test(unittest.TestCase):
         y = self.c.items()[1]
         z = self.c.items()[2]
         w = self.c.items()[3]
-        self.assertTrue(self.dss1.k_equivalence(self.dss1, [x, y]))
-        self.assertTrue(self.dss1.k_equivalence(self.dss2, [x, y]))
-        self.assertFalse(self.dss1.k_equivalence(self.dss2, [x, y, z]))
-        self.assertTrue(self.dss1.k_equivalence(self.dss3, [x, y]))
-        self.assertFalse(self.dss1.k_equivalence(self.dss3, [x, y, z]))
-        self.assertFalse(self.dss1.k_equivalence(self.dss2, [x, y, z, w]))
-        self.assertTrue(self.dss2.k_equivalence(self.dss3, [x, y, z]))
-        self.assertFalse(self.dss2.k_equivalence(self.dss3, [x, y, z, w]))
+        self.assertFalse(self.dss1.k_equivalence(self.dss1, [x, y]))
+        self.assertFalse(self.dss1.k_equivalence(self.dss2, [x, y]))
+        self.assertTrue(self.dss1.k_equivalence(self.dss2, [x, y, z]))
+        self.assertFalse(self.dss1.k_equivalence(self.dss3, [x, y]))
+        self.assertTrue(self.dss1.k_equivalence(self.dss3, [x, y, z]))
+        self.assertTrue(self.dss1.k_equivalence(self.dss2, [x, y, z, w]))
+        self.assertFalse(self.dss2.k_equivalence(self.dss3, [x, y, z]))
+        self.assertTrue(self.dss2.k_equivalence(self.dss3, [x, y, z, w]))
 
 
 if __name__ == '__main__':
