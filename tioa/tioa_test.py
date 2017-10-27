@@ -1,5 +1,5 @@
 import unittest
-from .tioa import *
+from tioa.tioa import *
 from test.udbm import Context
 
 class GuardTest(unittest.TestCase):
@@ -47,3 +47,6 @@ class TIOATest(unittest.TestCase):
         self.assertTrue(table[c.y] == 3)
         self.assertTrue(table[c.z] == 3)
         self.assertTrue(table[c.w] == 1)
+
+if __name__ == '__main__':
+    unittest.main()
