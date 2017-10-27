@@ -1,10 +1,6 @@
 import unittest
-import TIOA
-import Guard
-import Edge
-import sys
-sys.path.insert(0, '../test/')
-import udbm
+from .tioa import *
+from test.udbm import Context
 
 class GuardTest(unittest.TestCase):
 
