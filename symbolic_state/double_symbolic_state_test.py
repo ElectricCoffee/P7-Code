@@ -18,11 +18,11 @@ class double_symbolic_state_test(unittest.TestCase):
         cls.dss2 = DoubleSymbolicState(None, cls.zone2)
         cls.dss3 = DoubleSymbolicState(None, cls.zone3)
 
-    def test_m_eqiavalens(self):
-        x = self.c.items[0]
-        y = self.c.items[1]
-        z = self.c.items[2]
-        w = self.c.items[3]
+    def test_k_eqiavalens(self):
+        x = self.c.items()[0]
+        y = self.c.items()[1]
+        z = self.c.items()[2]
+        w = self.c.items()[3]
         self.assertTrue(self.dss1.k_equivalence(self.dss1, [x, y]))
         self.assertTrue(self.dss1.k_equivalence(self.dss2, [x, y]))
         self.assertFalse(self.dss1.k_equivalence(self.dss2, [x, y, z]))
