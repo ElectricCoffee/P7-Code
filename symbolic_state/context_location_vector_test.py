@@ -1,5 +1,5 @@
 import unittest
-from symbolic_state.context_location_vector import *
+from .context_location_vector import *
 from tioa.tioa import TIOA
 from tioa.automata_context import AutomataContext
 
