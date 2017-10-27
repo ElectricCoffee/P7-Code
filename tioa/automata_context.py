@@ -1,6 +1,6 @@
 from symbolic_state.location_vector import LocationVector
 from symbolic_state.context_location_vector import ContextLocationVector
-from tioa.tioa import TIOA
+from .tioa import TIOA
 
 
 class AutomataContext(list):
