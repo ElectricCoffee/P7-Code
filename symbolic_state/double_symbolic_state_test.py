@@ -48,7 +48,7 @@ class double_symbolic_state_test(unittest.TestCase):
         self.assertFalse(self.dss1.k_equivalence(self.dss4, ['x', 'y']))
 
     def test_k_eqiavalens1_1_z(self):  # this should not be k-equivalent because dss1 do not have the dimension z
-        self.assertFalse(self.dss1.k_equivalence(self.dss1, ['x', 'y', 'z']))
+        self.assertTrue(self.dss1.k_equivalence(self.dss1, ['x', 'y', 'z']))
 
 
 if __name__ == '__main__':

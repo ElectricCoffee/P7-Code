@@ -18,11 +18,8 @@ class DoubleSymbolicState:
         u1 = self.zone
         u2 = other.zone
 
-        for clock in k:
-            if not u1.context.hasClockByName(clock):
-                return False
-            elif not u2.context.hasClockByName(clock):
-                return False
+        if u1.context.clocks != u2.context.clocks:
+            return False
 
         # finding the different clocks in u1 and u2
         u1_minus_k = diff(u1, k)
