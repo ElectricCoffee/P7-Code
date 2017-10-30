@@ -1,7 +1,3 @@
-from test.udbm import Federation
-from symbolic_state.location_vector import LocationVector
-
-
 class DoubleSymbolicState:
 
     def __init__(self, location_vector, zone):

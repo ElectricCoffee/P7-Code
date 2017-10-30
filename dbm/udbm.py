@@ -17,10 +17,7 @@
 
 import logging
 
-import pdb
-
-import udbm_int
-import copy
+from dbm import udbm_int
 
 my_logger = logging.getLogger('Python-UDBM')
 my_logger.setLevel(logging.DEBUG)
@@ -144,12 +141,12 @@ class Constraint:
 class Federation:
     def __init__(self, arg):
         if isinstance(arg, Constraint):
-            self._fed = udbm_int.Federation(len(arg.context.clocks)+1, arg._constraint)
+            self._fed = udbm_int.Federation(len(arg.context.clocks) + 1, arg._constraint)
             self.context = arg.context
             self.context_hash = hash(arg.context)
         elif isinstance(arg, Context):
             context = arg
-            self._fed = udbm_int.Federation(len(context.clocks)+1)
+            self._fed = udbm_int.Federation(len(context.clocks) + 1)
             self._fed.setZero()
             self.context = context 
             self.context_hash = hash(context)
@@ -297,10 +294,10 @@ class Federation:
     def contains(self, valuation):
         valuation.check()
         if isinstance(valuation, IntValuation):
-            p = udbm_int.IntClockValuation(len(self.context.clocks)+1)
+            p = udbm_int.IntClockValuation(len(self.context.clocks) + 1)
             f = self._fed.containsIntValuation
         elif isinstance(valuation, FloatValuation):
-            p = udbm_int.DoubleClockValuation(len(self.context.clocks)+1)
+            p = udbm_int.DoubleClockValuation(len(self.context.clocks) + 1)
             f = self._fed.containsDoubleValuation
         else:
             my_logger.error("Unknown valuation type")
@@ -334,7 +331,7 @@ class Federation:
         if len(a) != len(self.context.clocks):
             my_logger.error("extrapolateMaxBounds without all clocks setted")
             assert(0)
-        v = udbm_int.IntVector(len(self.context.clocks)+1)                
+        v = udbm_int.IntVector(len(self.context.clocks) + 1)
         v.setElement(0, 0) # we don't care about first element, but let's exclude possible nedetermenism
         for clock in a.keys():
             if a[clock] is None:

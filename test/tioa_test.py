@@ -1,6 +1,8 @@
 import unittest
+
+from dbm.udbm import Context
 from tioa.tioa import *
-from test.udbm import Context
+
 
 class GuardTest(unittest.TestCase):
 

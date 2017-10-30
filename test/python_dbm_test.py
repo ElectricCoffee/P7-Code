@@ -1,12 +1,11 @@
-import udbm
-
 import unittest
 
-import pdb
+from dbm import udbm
+
 
 class UDBMTest(unittest.TestCase):
     def setUp(self):
-        self.c = udbm.Context(["x", "y", "z"], name = "c")        
+        self.c = udbm.Context(["x", "y", "z"], name ="c")
     def test_int_valuation(self):
         c = self.c
         v = udbm.IntValuation(c)

@@ -1,4 +1,4 @@
-from symbolic_state.location_vector import LocationVector
+from .location_vector import LocationVector
 
 
 class ContextLocationVector(LocationVector):
