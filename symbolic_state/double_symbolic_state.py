@@ -44,7 +44,7 @@ def diff(u, k):
     result = []
     u_clocks = u.context.clocks
     for clock_name in u.context.items():
-        if not (clock in k):
+        if not (clock_name in k):
             for clock in u_clocks:
                 if (clock.getFullName() == clock_name) or (clock.getFullName() == (u.context.name + '.' + clock_name)):
                     result.append(clock)
