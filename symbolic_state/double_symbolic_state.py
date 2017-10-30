@@ -25,8 +25,8 @@ class DoubleSymbolicState:
                 return False
 
         # finding the different clocks in u1 and u2
-        u1_minus_k = _diff(u1, k)
-        u2_minus_k = _diff(u2, k)
+        u1_minus_k = diff(u1, k)
+        u2_minus_k = diff(u2, k)
 
         # freeing the unshared clocks in u1 and k
         for clock in u1_minus_k:
@@ -38,10 +38,11 @@ class DoubleSymbolicState:
         # returning the comparison of the modified u1 and u2
         return u1 == u2
 
-    def _diff(self, k):
-        """u1 and u2 is a federation, and returns the set differences between u1 and u2's clocks"""
-        result = []
-        for clock in self.zone.context.items():
-            if not (clock in k):
-                result.append(clock)
-        return result
+
+def diff(u, k):
+    """u1 is a federation, and k is a set of clocks and returns the set differences between u1 and k's clocks"""
+    result = []
+    for clock in u.context.items():
+        if not (clock in k):
+            result.append(clock)
+    return result
