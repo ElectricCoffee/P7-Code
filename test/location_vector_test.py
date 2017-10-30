@@ -1,4 +1,4 @@
-import sys, os, unittest
+import unittest
 from symbolic_state.location_vector import *
 
 
@@ -55,5 +55,4 @@ class LocationVectorTest(unittest.TestCase):
         self.assertTrue(self.r >= self.r)
 
 if __name__ == '__main__':
-    sys.path.append(os.path.realpath('..'))
     unittest.main()
