@@ -30,13 +30,13 @@ class DoubleSymbolicState:
 
         # freeing the unshared clocks in u1 and k
         for clock in u1_minus_k:
-            u1.freeClock(clock)
+            u1_new = u1.freeClock(clock)
         # freeing the unshared clocks in u2 and k
         for clock in u2_minus_k:
-            u2.freeClock(clock)
+            u2_new = u2.freeClock(clock)
 
         # returning the comparison of the modified u1 and u2
-        return u1 == u2
+        return u1_new == u2_new
 
 
 def diff(u, k):
