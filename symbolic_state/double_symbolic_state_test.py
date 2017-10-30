@@ -18,19 +18,29 @@ class double_symbolic_state_test(unittest.TestCase):
         cls.dss2 = DoubleSymbolicState(None, cls.zone2)
         cls.dss3 = DoubleSymbolicState(None, cls.zone3)
 
-    def test_k_eqiavalens(self):
-        x = 'x'
-        y = 'y'
-        z = 'z'
-        w = 'w'
-        #self.assertTrue(self.dss1.k_equivalence(self.dss1, [x, y]))
-        self.assertTrue(self.dss1.k_equivalence(self.dss2, [x, y]))
-        self.assertFalse(self.dss1.k_equivalence(self.dss2, [x, y, z]))
-        self.assertTrue(self.dss1.k_equivalence(self.dss3, [x, y]))
-        self.assertFalse(self.dss1.k_equivalence(self.dss3, [x, y, z]))
-        self.assertFalse(self.dss1.k_equivalence(self.dss2, [x, y, z, w]))
-        self.assertTrue(self.dss2.k_equivalence(self.dss3, [x, y, z]))
-        self.assertFalse(self.dss2.k_equivalence(self.dss3, [x, y, z, w]))
+    def test_k_eqiavalens1_1(self):
+        self.assertTrue(self.dss1.k_equivalence(self.dss1, ['x', 'y']))
+
+    def test_k_eqiavalens1_2(self):
+        self.assertTrue(self.dss1.k_equivalence(self.dss2, ['x', 'y']))
+
+    def test_k_eqiavalens1_2_z(self):
+        self.assertFalse(self.dss1.k_equivalence(self.dss2, ['x', 'y', 'z']))
+
+    def test_k_eqiavalens1_3(self):
+        self.assertTrue(self.dss1.k_equivalence(self.dss3, ['x', 'y']))
+
+    def test_k_eqiavalens1_3_z(self):
+        self.assertFalse(self.dss1.k_equivalence(self.dss3, ['x', 'y', 'z']))
+
+    def test_k_eqiavalens1_2_z_w(self):
+        self.assertFalse(self.dss1.k_equivalence(self.dss2, ['x', 'y', 'z', 'w']))
+
+    def test_k_eqiavalens2_3(self):
+        self.assertTrue(self.dss2.k_equivalence(self.dss3, ['x', 'y', 'z']))
+
+    def test_k_eqiavalens2_3_w(self):
+        self.assertFalse(self.dss2.k_equivalence(self.dss3, ['x', 'y', 'z', 'w']))
 
 
 if __name__ == '__main__':
