@@ -12,7 +12,7 @@ class DoubleSymbolicState:
         self.zone = zone
 
     def k_equivalence(self, other, k):
-        """k is a set of clocks, and
+        """k is a set of clocknames, and
         u1 and u2 is federations and returns if they are equal in the dimensions in k"""
 
         u1 = self.zone
