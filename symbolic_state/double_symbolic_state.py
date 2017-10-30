@@ -42,7 +42,10 @@ class DoubleSymbolicState:
 def diff(u, k):
     """u1 is a federation, and k is a set of clocks and returns the set differences between u1 and k's clocks"""
     result = []
-    for clock in u.context.items():
+    u_clocks = u.context.clocks
+    for clock_name in u.context.items():
         if not (clock in k):
-            result.append(clock)
+            for clock in u_clocks:
+                if (clock.getFullName() == clock_name) or (clock.getFullName() == (u.context.name + '.' + clock_name)):
+                    result.append(clock)
     return result
