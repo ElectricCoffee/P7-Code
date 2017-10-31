@@ -12,9 +12,13 @@ class DoubleSymbolicState:
         self.zone = zone
 
     def k_equivalence(self, other, k):
-        """k is a set of clocknames, and
-        u1 and u2 is federations and returns if they are equal in the dimensions in k"""
+        """Determind if self and other is k-equivalent
 
+        Keyword arguments:
+            --other is a double symbolic state
+            --k is a set of clocknames
+        """
+        # u1 and u2 is a federation
         u1 = self.zone
         u2 = other.zone
 
@@ -37,7 +41,12 @@ class DoubleSymbolicState:
 
 
 def diff(u, k):
-    """u1 is a federation, and k is a set of clocks and returns the set differences between u1 and k's clocks"""
+    """finds the differences between u and k
+
+    Keyword arguments:
+        --u is a federation
+        --k is a set of clocknames
+    """
     result = []
     for clock_name, clock in u.context.items():
         if not (clock_name in k):
