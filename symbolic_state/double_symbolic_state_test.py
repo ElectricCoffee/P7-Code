@@ -63,7 +63,7 @@ class double_symbolic_state_test(unittest.TestCase):
     def test_k_eqiavalens1_1_z(self):  # this should not be k-equivalent because dss1 do not have the dimension z
         self.assertTrue(self.dss1.k_equivalence(self.dss1, ['x', 'y', 'z']))
 
-    def testmk_equivalence(self):
+    def test_mk_equivalence(self):
         self.assertTrue(self.dss1.mk_equivalence(self.dss2, ['x', 'y'], {self.automaton0}))  # should return true for both
         self.assertTrue(self.dss1.mk_equivalence(self.dss2, ['x', 'y'], {self.automaton2}))
 
