@@ -64,11 +64,15 @@ class double_symbolic_state_test(unittest.TestCase):
         self.assertTrue(self.dss1.k_equivalence(self.dss1, ['x', 'y', 'z']))
 
     def test_mk_equivalence(self):
-        self.assertTrue(self.dss1.mk_equivalence(self.dss2, ['x', 'y'], {self.automaton0}))  # should return true for both
+        # should return true for both
+        self.assertTrue(self.dss1.mk_equivalence(self.dss2, ['x', 'y'], {self.automaton0}))
         self.assertTrue(self.dss1.mk_equivalence(self.dss2, ['x', 'y'], {self.automaton2}))
 
-        self.assertFalse(self.dss1.mk_equivalence(self.dss2, ['x', 'y', 'z'], {self.automaton0}))  # k-equavalence should return false
-        self.assertFalse(self.dss1.mk_equivalence(self.dss2, ['x', 'y'], {self.automaton1}))  # m-equavalence should return false
+        # k-equavalence should return false
+        self.assertFalse(self.dss1.mk_equivalence(self.dss2, ['x', 'y', 'z'], {self.automaton0}))
+        # m-equavalence should return false
+        self.assertFalse(self.dss1.mk_equivalence(self.dss2, ['x', 'y'], {self.automaton1}))
 
+        
 if __name__ == '__main__':
     unittest.main()
