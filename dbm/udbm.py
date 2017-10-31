@@ -16,7 +16,7 @@
 #   along with this binding.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
-from dbm import udbm_int 
+import dbm.udbm_int
 
 my_logger = logging.getLogger('Python-UDBM')
 my_logger.setLevel(logging.DEBUG)
