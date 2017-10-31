@@ -1,8 +1,9 @@
 import unittest
-from double_symbolic_state import *
+from symbolic_state.double_symbolic_state import *
 from tioa.tioa import TIOA
 from tioa.automata_context import AutomataContext
 from dbm.udbm import *
+
 
 class double_symbolic_state_test(unittest.TestCase):
 
