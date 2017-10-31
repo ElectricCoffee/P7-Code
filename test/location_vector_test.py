@@ -1,5 +1,5 @@
 import unittest
-from symbolic_state.location_vector import *
+from .location_vector import *
 
 
 class LocationVectorTest(unittest.TestCase):

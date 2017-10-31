@@ -1,9 +1,8 @@
-import sys
-sys.path.insert(0, '../test/')
-import udbm
-
-from numbers import Number
 from itertools import groupby
+from numbers import Number
+
+from dbm.udbm import Clock
+
 
 class TIOA:
     """TIOA: Timed Input/Output Automaton"""

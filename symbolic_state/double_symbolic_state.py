@@ -1,10 +1,3 @@
-import sys
-sys.path.insert(0, '../test/')
-from udbm import *
-sys.path.insert(0, '../symbolic_state/')
-from location_vector import *
-
-
 class DoubleSymbolicState:
 
     def __init__(self, location_vector, zone):

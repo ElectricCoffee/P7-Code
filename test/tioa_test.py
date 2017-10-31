@@ -1,10 +1,8 @@
 import unittest
-import TIOA
-import Guard
-import Edge
-import sys
-sys.path.insert(0, '../test/')
-import udbm
+
+from dbm.udbm import Context
+from tioa.tioa import *
+
 
 class GuardTest(unittest.TestCase):
 
@@ -51,3 +49,6 @@ class TIOATest(unittest.TestCase):
         self.assertTrue(table[c.y] == 3)
         self.assertTrue(table[c.z] == 3)
         self.assertTrue(table[c.w] == 1)
+
+if __name__ == '__main__':
+    unittest.main()
