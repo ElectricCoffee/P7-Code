@@ -15,10 +15,22 @@ class double_symbolic_state_test(unittest.TestCase):
         cls.zone3 = (cls.c.x < 3) & (cls.c.x > 2) & (cls.c.y < 5) & (cls.c.y > 1) & (cls.c.z < 8) & (cls.c.w > 2) & (cls.c.w < 8)
         cls.zone4 = (cls.c.x < 4) & (cls.c.x > 2) & (cls.c.y < 5) & (cls.c.y > 1)
 
-        cls.dss1 = DoubleSymbolicState(None, cls.zone1)
-        cls.dss2 = DoubleSymbolicState(None, cls.zone2)
-        cls.dss3 = DoubleSymbolicState(None, cls.zone3)
-        cls.dss4 = DoubleSymbolicState(None, cls.zone4)
+        #  Automata -- Only locations and initial location are defined.
+        cls.automaton0 = TIOA(['x', 'y'], 'x', None, None, None, None, None)
+        cls.automaton1 = TIOA(['a', 'b'], 'a', None, None, None, None, None)
+        cls.automaton2 = TIOA(['f', 'g'], 'f', None, None, None, None, None)
+
+        #  Context for the context location vectors -- Includes all the automata
+        context = AutomataContext([cls.automaton0, cls.automaton1, cls.automaton2])
+
+        #  Context location vectors created with context
+        lv0 = context.ContextLocationVector(['x', 'a', 'g'])
+        lv1 = context.ContextLocationVector(['x', 'b', 'g'])
+
+        cls.dss1 = DoubleSymbolicState(lv0, cls.zone1)
+        cls.dss2 = DoubleSymbolicState(lv1, cls.zone2)
+        cls.dss3 = DoubleSymbolicState(lv0, cls.zone3)
+        cls.dss4 = DoubleSymbolicState(lv1, cls.zone4)
 
     def test_k_eqiavalens1_1(self):  # a double symbolic states needs to be k-equivalent with it self
         self.assertTrue(self.dss1.k_equivalence(self.dss1, ['x', 'y']))
@@ -50,6 +62,12 @@ class double_symbolic_state_test(unittest.TestCase):
     def test_k_eqiavalens1_1_z(self):  # this should not be k-equivalent because dss1 do not have the dimension z
         self.assertTrue(self.dss1.k_equivalence(self.dss1, ['x', 'y', 'z']))
 
+    def testmk_equivalence(self):
+        self.assertTrue(self.dss1.mk_equivalence(self.dss2, self.zone1, self.automaton0))
+        self.assertTrue(self.dss1.mk_equivalence(self.dss2, self.zone1, self.automaton2))
+
+        self.assertFalse(self.dss1.mk_equivalence(self.dss2, self.zone2, self.automaton0)) # k-equavalence should return false
+        self.assertFalse(self.dss1.mk_equivalence(self.dss2, self.zone1, self.automaton1)) # m-equavalence should return false
 
 if __name__ == '__main__':
     unittest.main()
