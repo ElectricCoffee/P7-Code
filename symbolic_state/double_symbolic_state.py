@@ -32,6 +32,17 @@ class DoubleSymbolicState:
         # returning the comparison of the modified u1 and u2
         return u1 == u2
 
+    def mk_equivalence(self, other, k, m):
+        """determind if self and other are mk-equivalent
+
+        Keyword arguments:
+            other -- is a double symbolic state
+            k -- is a set of clocknames
+            m -- is a set of automata, where locations must be equal
+        """
+        return (self.k_equivalence(other, k)) and \
+            (self.location_vector.m_equivalence(other.location_vector, m))
+
 
 def diff(u, k):
     """finds the differences between u and k
