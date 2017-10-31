@@ -1,11 +1,8 @@
 import unittest
 from double_symbolic_state import *
-import sys
-sys.path.insert(0, '../tioa/')
-from tioa import TIOA
-from automata_context import AutomataContext
-sys.path.insert(0, '../dbm/')
-from udbm import *
+from tioa.tioa import TIOA
+from tioa.automata_context import AutomataContext
+from dbm.udbm import *
 
 class double_symbolic_state_test(unittest.TestCase):
 
