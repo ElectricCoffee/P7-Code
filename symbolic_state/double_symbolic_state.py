@@ -41,7 +41,7 @@ class DoubleSymbolicState:
             m -- is a set of automata, where locations must be equal
         """
         return (self.k_equivalence(other, k)) and \
-            (self.location_vector.m_equivalence(other, m))
+            (self.location_vector.m_equivalence(other.location_vector, m))
 
 
 def diff(u, k):
