@@ -1,7 +1,7 @@
 import unittest
 from double_symbolic_state import *
 import sys
-sys.path.insert(0, '../test/')
+sys.path.insert(0, '../dbm/')
 from udbm import *
 
 class double_symbolic_state_test(unittest.TestCase):
