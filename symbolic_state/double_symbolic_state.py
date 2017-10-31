@@ -4,13 +4,19 @@ class DoubleSymbolicState:
         self.location_vector = location_vector
         self.zone = zone
 
-    @staticmethod
-    def k_equivalence(k, u1, u2):
-        """k is a set of clocks, and
-        u1 and u2 is federations and returns if they are equal in the dimensions in k"""
-        for clock in k:
-            if not (u1.context.hasClockByName(clock) and u2.context.hasClockByName(clock)):
-                return False
+    def k_equivalence(self, other, k):
+        """Determind if self and other is k-equivalent
+
+        Keyword arguments:
+        other -- is a double symbolic state
+        k  -- is a set of clocknames
+        """
+        # u1 and u2 is a federation
+        u1 = self.zone
+        u2 = other.zone
+
+        if u1.context.clocks != u2.context.clocks:
+            return False
 
         # finding the different clocks in u1 and u2
         u1_minus_k = diff(u1, k)
@@ -18,19 +24,24 @@ class DoubleSymbolicState:
 
         # freeing the unshared clocks in u1 and k
         for clock in u1_minus_k:
-            u1.freeClock(clock)
+            u1 = u1.freeClock(clock)
         # freeing the unshared clocks in u2 and k
         for clock in u2_minus_k:
-            u2.freeClock(clock)
+            u2 = u2.freeClock(clock)
 
         # returning the comparison of the modified u1 and u2
         return u1 == u2
 
 
-def diff(u1, k):
-    """u1 and u2 is a federation, and returns the set differences between u1 and u2's clocks"""
+def diff(u, k):
+    """finds the differences between u and k
+
+    Keyword arguments:
+    u -- is a federation
+    k -- is a set of clocknames
+    """
     result = []
-    for clock in k:
-        if not (u1.context.hasClockByName(clock)):
+    for clock_name, clock in u.context.items():
+        if not (clock_name in k):
             result.append(clock)
     return result
