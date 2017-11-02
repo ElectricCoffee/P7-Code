@@ -4,12 +4,13 @@ echo "Removing *.pyc and *~ files"
 
 count=0
 
-for file in $(find .); do
+while IFS= read -r -d $'\0' file; do
     if [[ $file == *.pyc || $file == *~ ]]; then
+        echo "removing $file"
         rm $file
         let "count++"
     fi
-done
+done < <(find . -print0)
 
 echo "removed $count files."
 
