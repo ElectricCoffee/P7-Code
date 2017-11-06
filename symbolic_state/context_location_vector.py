@@ -7,8 +7,23 @@ class ContextLocationVector(LocationVector):
         self.context = context
         super(ContextLocationVector, self).__init__(locations)
 
+    @staticmethod
+    def static_m_equivalence(location_vector, other_location_vector, m):
+        """Checks M_equivalence between two ContextLocationVectors ContextLocationVector
+        
+        Keyword arguments:
+        location_vector -- The first ContextLocationVector in the comparison
+        other_location_vector -- The other ContextLocationVector in the comparison
+        m -- The set of automata, where locations must be equal
+
+        Assertions:
+        None
+        """
+
+        return location_vector.m_equivalence(other_location_vector, m)
+
     def m_equivalence(self, other, m):
-        """Checks M_equivalance with another ContextLocationVector
+        """Checks M_equivalence with another ContextLocationVector
 
         Keyword arguments:
         other -- Another ContextLocationVector be be compared with
