@@ -26,6 +26,12 @@ class TIOA:
         self.input_actions = input_actions
         self.output_actions = output_actions
         self.invariants = invariants
+        self.preceeding_edges = {}
+        self._generate_preceeding_edges()
+
+    def _generate_preceeding_edges(self):
+        self.preceeding_edges = groupby(sorted(self.edges, key=lambda edge: edge.target_location),
+                                        key=lambda edge: edge.target_location)
 
     def is_valid_edge(self, edge):
         return \
@@ -143,4 +149,7 @@ class Guard:
             max_clocks[key] = max([op[self._value] for op in group])
 
         return max_clocks
+
+    def k_sorted(self, k):
+        return self.clocks() <= k
         
