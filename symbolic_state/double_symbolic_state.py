@@ -45,35 +45,64 @@ class DoubleSymbolicState:
             (self.location_vector.m_equivalence(other.location_vector, m))
 
     def mk_predecessors(self, m, k):
+        """Finds the symbolic mk predecessors of this state given the context of its constituents
+
+        Keyword arguments:
+        m -- An iterable of machines
+        k -- An iterable of clocks
+
+        Assertions:
+        m is in the context of the location vector of self
+        k is in the context of the zone of self
+        """
+        for automaton in m:
+            assert(automaton in self.location_vector.context)
+        for clock in k:
+            assert(self.zone.context is clock.context)
+
         predecessors = []
 
-        for option in self._get_predecessor_options(m, k):
-            predecessors += self._predecessor_from_option(option)
+        for option in self._get_predecessor_options(m, k):         #For all possible options
+            predecessors += self._predecessor_from_option(option)  #Find the resulting predecessor
         return predecessors
 
     def _get_predecessor_options(self, m, k):
-        optionsbyaction = {}
         actions = set(map(lambda auto: auto.input_actions + auto.output_actions, m))
+        # Store all actions known to m as a set
+        optionsbyaction = {}
         for a in actions:
             optionsbyaction[a] = {}
+        # The resulting options will be grouped by action
 
-        for location, automaton in filter(lambda (l, a): a in m,
+
+        for location, automaton in filter(lambda (_, auto): auto in m,
                                           zip(self.location_vector, self.location_vector.context)):
+        # For all locations, automata from self.location_vector that are in m
+            invalidactions = set()
             for a in actions:
                 def is_valid_edge(edge):
                     return edge.action == a and edge.guard.k_sorted(k)
-
+                # Predicate tests if edge can be followed with the action a
                 edges = filter(is_valid_edge, automaton.preceeding_edges[location])
+                # Find all preceeding edges that can be followed with the action a
                 if edges == []:
                     if a in automaton.input_actions + automaton.output_actions:
-                        del optionsbyaction[a]
+                    # If there are no such edges and the automaton knows of the action a,
+                        invalidactions.add(a)
+                        # then the action a cannot be taken since no possible N can exist.
+                    # Else the action could still be valid, but this automaton is not in N. Nothing should be done.
                 else:
+                # If there are such edges
                     optionsbyaction[a][automaton] = edges
-            actions = optionsbyaction.keys()
+                    # Then this automaton is in N and the edges should be considered as options.
+            actions -= invalidactions
+            # Update actions to remove the invalid actions.
+            # This cannot be done while iterating over it.
 
-        for a in optionsbyaction.keys():
+        for a in actions:
             for option in DoubleSymbolicState._generate_options(optionsbyaction[a], 0):
                 yield option
+        #Finally _generate_options is called to get all permutations of edges that could be chosen
 
     @staticmethod
     def _generate_options(options, k):
@@ -91,7 +120,7 @@ class DoubleSymbolicState:
         afterinvariant = self.zone.context.getTautologyFederation()
         guard = self.zone.context.getTautologyFederation()
         resetzone = self.zone.context.getTautologyFederation()
-        reset = {}
+        reset = set()
         newlocations = []
 
         for location, automaton in zip(self.location_vector, self.location_vector.context):
