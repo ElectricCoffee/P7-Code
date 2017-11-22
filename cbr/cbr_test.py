@@ -4,6 +4,7 @@ from dbm.udbm import *
 from tioa.tioa import *
 from symbolic_state.double_symbolic_state import *
 from symbolic_state.location_vector import *
+from tioa.automata_context import *
 
 class double_symbolic_state_test(unittest.TestCase):
 
@@ -24,8 +25,10 @@ class double_symbolic_state_test(unittest.TestCase):
         cls.t6 = TIOA(["l", "m", "n"], "l", ['x', 'y'],
                       [Edge("l", "g", Guard((cls.c['x'], 2, '<')), [], "m"), Edge("m", "h", None, [], "n")], ["h"], ["g"], {})
 
+        cls.autocon12 = AutomataContext([cls.t1, cls.t2])
+
     def test_sym_pre(self):
-        self.assertTrue(DoubleSymbolicState(LocationVector(["c", "f"]), self.c.getZeroFederation()).mk_predecessors([self.t1, self.t2], self.c.items()) == DoubleSymbolicState(LocationVector(["b", "e"]), self.c.getZeroFederation()))
+        self.assertTrue(DoubleSymbolicState(self.autocon12.ContextLocationVector(["c", "f"]), self.c.getZeroFederation()).mk_predecessors([self.t1, self.t2], self.c.items()) == DoubleSymbolicState(self.autocon12.ContextLocationVector(["b", "e"]), self.c.getZeroFederation()))
 
     def tes_cbr_true_wu_zone(self):
         self.assertTrue(cbr(DoubleSymbolicState(LocationVector(["a", "d"]), self.c.getZeroFederation()),
