@@ -27,8 +27,12 @@ class double_symbolic_state_test(unittest.TestCase):
 
         cls.autocon12 = AutomataContext([cls.t1, cls.t2])
 
+        cls.clocks =[]
+        for clock_name, clock in cls.c.items():
+            cls.clocks.append(clock)
+
     def test_sym_pre(self):
-        self.assertTrue(DoubleSymbolicState(self.autocon12.ContextLocationVector(["c", "f"]), self.c.getZeroFederation()).mk_predecessors([self.t1, self.t2], self.c.items()) == DoubleSymbolicState(self.autocon12.ContextLocationVector(["b", "e"]), self.c.getZeroFederation()))
+        self.assertTrue(DoubleSymbolicState(self.autocon12.ContextLocationVector(["c", "f"]), self.c.getZeroFederation()).mk_predecessors([self.t1, self.t2], self.clocks) == DoubleSymbolicState(self.autocon12.ContextLocationVector(["b", "e"]), self.c.getZeroFederation()))
 
     def tes_cbr_true_wu_zone(self):
         self.assertTrue(cbr(DoubleSymbolicState(LocationVector(["a", "d"]), self.c.getZeroFederation()),
