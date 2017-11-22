@@ -1,4 +1,5 @@
 from dbm.udbm import Federation
+from operator import add
 
 class DoubleSymbolicState:
     def __init__(self, location_vector, zone):
@@ -79,7 +80,7 @@ class DoubleSymbolicState:
         k -- An iterable of clocks
         """
         # Store all actions known to m as a set
-        actions = set(map(lambda auto: auto.input_actions + auto.output_actions, m))
+        actions = set(reduce(add, map(lambda auto: auto.input_actions + auto.output_actions, m)))
         optionsbyaction = {}
         # The resulting options will be grouped by action
         for a in actions:
