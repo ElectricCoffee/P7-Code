@@ -25,7 +25,7 @@ class double_symbolic_state_test(unittest.TestCase):
                       [Edge("l", "g", Guard((cls.c['x'], 2, '<')), [], "m"), Edge("m", "h", None, [], "n")], ["h"], ["g"], {})
 
     def test_sym_pre(self):
-        self.assertTrue(DoubleSymbolicState(LocationVector(["c", "f"]), self.c.getZeroFederation().mk_predecessors([self.t1, self.t2], self.c.items())) == DoubleSymbolicState(LocationVector(["b", "e"]), self.c.getZeroFederation()))
+        self.assertTrue(DoubleSymbolicState(LocationVector(["c", "f"]), self.c.getZeroFederation()).mk_predecessors([self.t1, self.t2], self.c.items()) == DoubleSymbolicState(LocationVector(["b", "e"]), self.c.getZeroFederation()))
 
     def tes_cbr_true_wu_zone(self):
         self.assertTrue(cbr(DoubleSymbolicState(LocationVector(["a", "d"]), self.c.getZeroFederation()),
