@@ -62,50 +62,66 @@ class DoubleSymbolicState:
 
         predecessors = []
 
-        for option in self._get_predecessor_options(m, k):         #For all possible options
-            predecessors += self._predecessor_from_option(option)  #Find the resulting predecessor
+        # For all possible options
+        for option in self._get_predecessor_options(m, k):
+            # Find the resulting predecessor
+            predecessor = self._predecessor_from_option(option)
+            # Only consider the predecessor if it has a non-empty zone
+            if not predecessor.zone.isEmpty():
+                predecessors += predecessor
         return predecessors
 
     def _get_predecessor_options(self, m, k):
-        actions = set(map(lambda auto: auto.input_actions + auto.output_actions, m))
+        """Calculates all possible options for precedence given mk
+
+        Keyword arguments:
+        m -- An iterable of machines
+        k -- An iterable of clocks
+        """
         # Store all actions known to m as a set
+        actions = set(map(lambda auto: auto.input_actions + auto.output_actions, m))
         optionsbyaction = {}
+        # The resulting options will be grouped by action
         for a in actions:
             optionsbyaction[a] = {}
-        # The resulting options will be grouped by action
 
-
+        # For all locations, automata from self.location_vector that are in m
         for location, automaton in filter(lambda (_, auto): auto in m,
                                           zip(self.location_vector, self.location_vector.context)):
-        # For all locations, automata from self.location_vector that are in m
             invalidactions = set()
             for a in actions:
+                # Predicate tests if edge can be followed with the action a
                 def is_valid_edge(edge):
                     return edge.action == a and edge.guard.k_sorted(k)
-                # Predicate tests if edge can be followed with the action a
+                # Find all preceding edges that can be followed with the action a
                 edges = filter(is_valid_edge, automaton.preceeding_edges[location])
-                # Find all preceeding edges that can be followed with the action a
                 if edges == []:
-                    if a in automaton.input_actions + automaton.output_actions:
                     # If there are no such edges and the automaton knows of the action a,
-                        invalidactions.add(a)
+                    if a in automaton.input_actions + automaton.output_actions:
                         # then the action a cannot be taken since no possible N can exist.
+                        invalidactions.add(a)
                     # Else the action could still be valid, but this automaton is not in N. Nothing should be done.
-                else:
                 # If there are such edges
-                    optionsbyaction[a][automaton] = edges
+                else:
                     # Then this automaton is in N and the edges should be considered as options.
-            actions -= invalidactions
+                    optionsbyaction[a][automaton] = edges
             # Update actions to remove the invalid actions.
             # This cannot be done while iterating over it.
+            actions -= invalidactions
 
+        # Finally _generate_options is called to get all permutations of edges that could be chosen
         for a in actions:
-            for option in DoubleSymbolicState._generate_options(optionsbyaction[a], 0):
+            for option in DoubleSymbolicState._generate_options(optionsbyaction[a]):
                 yield option
-        #Finally _generate_options is called to get all permutations of edges that could be chosen
 
     @staticmethod
-    def _generate_options(options, k):
+    def _generate_options(options, k = 0):
+        """Generates all permutations of edges that can be chosen
+
+        Keyword arguments:
+        options -- A dictionary of edges grouped by automaton
+        k -- An integer used for recursion.
+        """
         if len(options) == k:
             yield {}
         else:
@@ -116,6 +132,13 @@ class DoubleSymbolicState:
                     yield option
 
     def _predecessor_from_option(self, option):
+        """Calculates the predecessor caused from a given option
+
+        Keyword arguments:
+        option -- A dictionary that maps an automaton to its transition edge, if it is in N.
+        """
+
+        # Initialize unrestricted zones for accumulation.
         beforeinvariant = self.zone.context.getTautologyFederation()
         afterinvariant = self.zone.context.getTautologyFederation()
         guard = self.zone.context.getTautologyFederation()
@@ -123,26 +146,41 @@ class DoubleSymbolicState:
         reset = set()
         newlocations = []
 
+        # For all automata
         for location, automaton in zip(self.location_vector, self.location_vector.context):
             edge = option[automaton]
+            # If the automaton is not in N
             if edge is None:
+                # The location remains the same
                 newlocations += location
+            # Otherwise
             else:
+                #The new location is the initial location of the edge from option
                 newlocations += edge.initial_location
+        # Initialize the resulting location vector with the new locations
         newlocationvector = self.location_vector.context.ContextLocationVector(newlocations)
+
+        # Accumulate the guards and resets of the edges from option
         for edge in option.values():
             guard &= edge.guard
             reset |= edge.reset
+        # Calculate the resetzone by reseting all reset clocks in an unrestricted zone
         for clock in reset:
             resetzone.resetValueInPlace(clock)
+        # Accumulate the invariants of the locations before the transition
         for location, automaton in zip(self.location_vector, self.location_vector.context):
+            # Only concrete locations are considered
             if location != '*':
                 afterinvariant &= automaton.invariants[location]
+        # Accumulate the invariants of the locations after the transition
         for location, automaton in zip(newlocationvector, self.location_vector.context):
+            # Only concrete locations are considered
             if location != '*':
                 beforeinvariant &= automaton.invariants[location]
 
+        # Calculate the new zone
         newzone = DoubleSymbolicState._freeclocks(reset, self.zone.down & afterinvariant & resetzone) & guard & beforeinvariant
+        # Initialize the resulting state and return it
         return DoubleSymbolicState(newlocationvector, newzone)
 
     @staticmethod
