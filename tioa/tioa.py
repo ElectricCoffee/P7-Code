@@ -96,7 +96,7 @@ class Guard:
         return  isinstance(clock, Clock) \
             and isinstance(value, Number) \
             and isinstance(relation, str) \
-            and relation in _relations
+            and relation in Guard._relations
 
     @staticmethod
     def _tuple_to_federation(op):
@@ -119,7 +119,7 @@ class Guard:
 
     def to_federations(self):
         """Converts the clocks and values into a list of federations."""
-        return map(Guard._tuple_to_federation, ops)
+        return map(Guard._tuple_to_federation, self.ops)
             
     def to_federation(self):
         """Converts all the clocks and values into a single federation."""
