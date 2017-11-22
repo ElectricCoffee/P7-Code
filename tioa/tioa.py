@@ -30,8 +30,10 @@ class TIOA:
         self._generate_preceeding_edges()
 
     def _generate_preceeding_edges(self):
-        self.preceeding_edges = groupby(sorted(self.edges, key=lambda edge: edge.target_location),
-                                        key=lambda edge: edge.target_location)
+        target = lambda edge: edge.target_location
+        self.preceeding_edges = {}
+        for key, group in groupby(sorted(self.edges, key = target), key = target):
+            self.preceeding_edges[key] = list(group)
 
     def is_valid_edge(self, edge):
         return \
