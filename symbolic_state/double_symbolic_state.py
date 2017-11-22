@@ -150,6 +150,10 @@ class DoubleSymbolicState:
         for clock in clocks:
             zone.freeClockInPlace(clock)
 
+    def __le__(self, other):
+        return self.zone <= other.zone and self.location_vector <= other.locationvector
+
+
 def diff(u, k):
     """finds the differences between u and k
 
