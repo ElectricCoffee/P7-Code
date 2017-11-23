@@ -34,6 +34,7 @@ class TIOA:
         self.preceeding_edges = {}
         for key, group in groupby(sorted(self.edges, key = target), key = target):
             self.preceeding_edges[key] = list(group)
+        self.preceeding_edges['*'] = self.edges
 
     def is_valid_edge(self, edge):
         return \
