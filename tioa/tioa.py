@@ -88,6 +88,7 @@ class Guard:
         
         self.ops = ops
         self.context = context
+        self.zone = self.to_federation()
 
     @staticmethod
     def is_valid_op(op, context):
