@@ -184,7 +184,7 @@ class DoubleSymbolicState:
                     beforeinvariant &= invariant
 
         # Calculate the new zone
-        newzone = DoubleSymbolicState._freeclocks(reset, self.zone.down & afterinvariant & resetzone) & guard & beforeinvariant
+        newzone = DoubleSymbolicState._freeclocks(reset, self.zone.down() & afterinvariant & resetzone) & guard & beforeinvariant
         # Initialize the resulting state and return it
         return DoubleSymbolicState(newlocationvector, newzone)
 
