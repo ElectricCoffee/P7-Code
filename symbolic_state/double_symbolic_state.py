@@ -81,6 +81,12 @@ class DoubleSymbolicState:
         """
         # Store all actions known to m as a set
         actions = reduce(and_, map(lambda auto: auto.input_actions & auto.output_actions, m))
+
+        # Remove all actions known outside of m
+        for automaton in self.location_vector.context:
+            if automaton not in m:
+                actions -= automaton.input_actions & automaton.output_actions
+
         optionsbyaction = {}
         # The resulting options will be grouped by action
         for a in actions:
