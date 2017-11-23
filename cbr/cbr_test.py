@@ -12,18 +12,18 @@ class double_symbolic_state_test(unittest.TestCase):
     def setUpClass(cls):
         cls.c = Context(['x', 'y'], 'c')
         cls.t1 = TIOA(["a", "b", "c"], "a", ['x', 'y'],
-                      [Edge("a", "g", Guard(cls.c), set(), "b"), Edge("b", "h", Guard(cls.c), set(), "c")], ["g"], ["h"], {})
+                      [Edge("a", "g", Guard(cls.c), set(), "b"), Edge("b", "h", Guard(cls.c), set(), "c")], set("g"), set("h"), {})
         cls.t2 = TIOA(["d", "e", "f"], "d", ['x', 'y'],
-                      [Edge("d", "g", Guard(cls.c), set(), "e"), Edge("e", "h", Guard(cls.c), set(), "f")], ["h"], ["g"], {})
+                      [Edge("d", "g", Guard(cls.c), set(), "e"), Edge("e", "h", Guard(cls.c), set(), "f")], set("h"), set("g"), {})
         cls.t3 = TIOA(["l", "m", "n"], "l", ['x', 'y'],
-                      [Edge("l", "r", Guard(cls.c), set(), "m"), Edge("m", "t", Guard(cls.c), set(), "n")], ["r"], ["t"], {})
+                      [Edge("l", "r", Guard(cls.c), set(), "m"), Edge("m", "t", Guard(cls.c), set(), "n")], set("r"), set("t"), {})
 
         cls.t4 = TIOA(["a", "b", "c"], "a", ['x', 'y'],
-                      [Edge("a", "g", Guard(cls.c, (cls.c['x'], 2, '>')), set(), "b"), Edge("b", "h", Guard(cls.c), set(), "c")], ["g"], ["h"], {})
+                      [Edge("a", "g", Guard(cls.c, (cls.c['x'], 2, '>')), set(), "b"), Edge("b", "h", Guard(cls.c), set(), "c")], set("g"), set("h"), {})
         cls.t5 = TIOA(["d", "e", "f"], "d", ['x', 'y'],
-                      [Edge("d", "g", Guard(cls.c, (cls.c['x'], 2, '>')), set(), "e"), Edge("e", "h", Guard(cls.c), set(), "f")], ["h"], ["g"], {})
+                      [Edge("d", "g", Guard(cls.c, (cls.c['x'], 2, '>')), set(), "e"), Edge("e", "h", Guard(cls.c), set(), "f")], set("h"), set("g"), {})
         cls.t6 = TIOA(["l", "m", "n"], "l", ['x', 'y'],
-                      [Edge("l", "g", Guard(cls.c, (cls.c['x'], 2, '<')), set(), "m"), Edge("m", "h", Guard(cls.c), set(), "n")], ["h"], ["g"], {})
+                      [Edge("l", "g", Guard(cls.c, (cls.c['x'], 2, '<')), set(), "m"), Edge("m", "h", Guard(cls.c), set(), "n")], set("h"), set("g"), {})
 
         cls.autocon12 = AutomataContext([cls.t1, cls.t2])
 
