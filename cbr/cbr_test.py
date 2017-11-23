@@ -12,18 +12,18 @@ class double_symbolic_state_test(unittest.TestCase):
     def setUpClass(cls):
         cls.c = Context(['x', 'y'], 'c')
         cls.t1 = TIOA(["a", "b", "c"], "a", ['x', 'y'],
-                      [Edge("a", "g", Guard(cls.c), set(), "b"), Edge("b", "h", Guard(cls.c), set(), "c")], set("g"), set("h"), {})
+                      [Edge("a", "g", Guard(cls.c), set(), "b"), Edge("b", "h", Guard(cls.c), set(), "c")], {"g"}, {"h"}, {})
         cls.t2 = TIOA(["d", "e", "f"], "d", ['x', 'y'],
-                      [Edge("d", "g", Guard(cls.c), set(), "e"), Edge("e", "h", Guard(cls.c), set(), "f")], set("h"), set("g"), {})
+                      [Edge("d", "g", Guard(cls.c), set(), "e"), Edge("e", "h", Guard(cls.c), set(), "f")], {"h"}, {"g"}, {})
         cls.t3 = TIOA(["l", "m", "n"], "l", ['x', 'y'],
-                      [Edge("l", "r", Guard(cls.c), set(), "m"), Edge("m", "t", Guard(cls.c), set(), "n")], set("r"), set("t"), {})
+                      [Edge("l", "r", Guard(cls.c), set(), "m"), Edge("m", "t", Guard(cls.c), set(), "n")], {"r"}, {"t"}, {})
 
         cls.t4 = TIOA(["a", "b", "c"], "a", ['x', 'y'],
-                      [Edge("a", "g", Guard(cls.c, (cls.c['x'], 2, '>')), set(), "b"), Edge("b", "h", Guard(cls.c), set(), "c")], set("g"), set("h"), {})
+                      [Edge("a", "g", Guard(cls.c, (cls.c['x'], 2, '>')), set(), "b"), Edge("b", "h", Guard(cls.c), set(), "c")], {"g"}, {"h"}, {})
         cls.t5 = TIOA(["d", "e", "f"], "d", ['x', 'y'],
-                      [Edge("d", "g", Guard(cls.c, (cls.c['x'], 2, '>')), set(), "e"), Edge("e", "h", Guard(cls.c), set(), "f")], set("h"), set("g"), {})
+                      [Edge("d", "g", Guard(cls.c, (cls.c['x'], 2, '>')), set(), "e"), Edge("e", "h", Guard(cls.c), set(), "f")], {"h"}, {"g"}, {})
         cls.t6 = TIOA(["l", "m", "n"], "l", ['x', 'y'],
-                      [Edge("l", "g", Guard(cls.c, (cls.c['x'], 2, '<')), set(), "m"), Edge("m", "h", Guard(cls.c), set(), "n")], set("h"), set("g"), {})
+                      [Edge("l", "g", Guard(cls.c, (cls.c['x'], 2, '<')), set(), "m"), Edge("m", "h", Guard(cls.c), set(), "n")], {"h"}, {"g"}, {})
 
         cls.autocon12 = AutomataContext([cls.t1, cls.t2])
 
@@ -34,7 +34,7 @@ class double_symbolic_state_test(unittest.TestCase):
     def test_sym_pre(self):
         self.dss1 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["c", "f"]), self.c.getZeroFederation())
         self.dss2 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["b", "e"]), self.c.getZeroFederation())
-        self.assertEqual(self.dss1.mk_predecessors([self.t1, self.t2], self.clocks), self.dss2)
+        self.assertEqual(self.dss1.mk_predecessors([self.t1, self.t2], self.clocks), [self.dss2])
 
     def tes_cbr_true_wu_zone(self):
         self.assertTrue(cbr(DoubleSymbolicState(LocationVector(["a", "d"]), self.c.getZeroFederation()),
