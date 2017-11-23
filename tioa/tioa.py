@@ -86,7 +86,7 @@ class Guard:
         # assert that all the tuples in ops are valid
         assert(all(map(lambda op: Guard.is_valid_op(op, context), ops)))
         
-        self.ops = ops
+        self.ops = list(ops)
         self.context = context
         self.zone = self.to_federation()
 
