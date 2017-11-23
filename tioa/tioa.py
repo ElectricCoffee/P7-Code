@@ -101,7 +101,7 @@ class Guard:
             and isinstance(value, Number) \
             and isinstance(relation, str) \
             and clock.context == context \
-            and relation in Guard._relations 
+            and relation in Guard._relations
 
     @staticmethod
     def _tuple_to_federation(op):

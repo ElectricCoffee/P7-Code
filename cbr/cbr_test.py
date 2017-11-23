@@ -12,18 +12,18 @@ class double_symbolic_state_test(unittest.TestCase):
     def setUpClass(cls):
         cls.c = Context(['x', 'y'], 'c')
         cls.t1 = TIOA(["a", "b", "c"], "a", ['x', 'y'],
-                      [Edge("a", "g", Guard(), [], "b"), Edge("b", "h", Guard(), [], "c")], ["g"], ["h"], {})
+                      [Edge("a", "g", Guard(cls.c), [], "b"), Edge("b", "h", Guard(cls.c), [], "c")], ["g"], ["h"], {})
         cls.t2 = TIOA(["d", "e", "f"], "d", ['x', 'y'],
-                      [Edge("d", "g", Guard(), [], "e"), Edge("e", "h", Guard(), [], "f")], ["h"], ["g"], {})
+                      [Edge("d", "g", Guard(cls.c), [], "e"), Edge("e", "h", Guard(cls.c), [], "f")], ["h"], ["g"], {})
         cls.t3 = TIOA(["l", "m", "n"], "l", ['x', 'y'],
-                      [Edge("l", "r", Guard(), [], "m"), Edge("m", "t", Guard(), [], "n")], ["r"], ["t"], {})
+                      [Edge("l", "r", Guard(cls.c), [], "m"), Edge("m", "t", Guard(cls.c), [], "n")], ["r"], ["t"], {})
 
         cls.t4 = TIOA(["a", "b", "c"], "a", ['x', 'y'],
-                      [Edge("a", "g", Guard((cls.c['x'], 2, '>')), [], "b"), Edge("b", "h", Guard(), [], "c")], ["g"], ["h"], {})
+                      [Edge("a", "g", Guard(cls.c, (cls.c['x'], 2, '>')), [], "b"), Edge("b", "h", Guard(cls.c), [], "c")], ["g"], ["h"], {})
         cls.t5 = TIOA(["d", "e", "f"], "d", ['x', 'y'],
-                      [Edge("d", "g", Guard((cls.c['x'], 2, '>')), [], "e"), Edge("e", "h", Guard(), [], "f")], ["h"], ["g"], {})
+                      [Edge("d", "g", Guard(cls.c, (cls.c['x'], 2, '>')), [], "e"), Edge("e", "h", Guard(cls.c), [], "f")], ["h"], ["g"], {})
         cls.t6 = TIOA(["l", "m", "n"], "l", ['x', 'y'],
-                      [Edge("l", "g", Guard((cls.c['x'], 2, '<')), [], "m"), Edge("m", "h", Guard(), [], "n")], ["h"], ["g"], {})
+                      [Edge("l", "g", Guard(cls.c, (cls.c['x'], 2, '<')), [], "m"), Edge("m", "h", Guard(cls.c), [], "n")], ["h"], ["g"], {})
 
         cls.autocon12 = AutomataContext([cls.t1, cls.t2])
 
