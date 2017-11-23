@@ -190,8 +190,10 @@ class DoubleSymbolicState:
 
     @staticmethod
     def _freeclocks(clocks, zone):
+        newzone = zone.copy()
         for clock in clocks:
-            zone.freeClockInPlace(clock)
+            newzone.freeClockInPlace(clock)
+        return newzone
 
     def __le__(self, other):
         return self.zone <= other.zone and self.location_vector <= other.locationvector
