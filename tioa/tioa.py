@@ -129,7 +129,7 @@ class Guard:
             
     def to_federation(self):
         """Converts all the clocks and values into a single federation."""
-        if ops == []:
+        if self.ops == []:
             return self.context.getTautologyFederation()
         else:
             return reduce(lambda x, y: x & y, self.to_federations())
