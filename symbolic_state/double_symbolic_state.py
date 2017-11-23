@@ -149,7 +149,7 @@ class DoubleSymbolicState:
 
         # For all automata
         for location, automaton in zip(self.location_vector, self.location_vector.context):
-            edge = option[automaton]
+            edge = option.get(automaton)
             # If the automaton is not in N
             if edge is None:
                 # The location remains the same
@@ -172,12 +172,16 @@ class DoubleSymbolicState:
         for location, automaton in zip(self.location_vector, self.location_vector.context):
             # Only concrete locations are considered
             if location != '*':
-                afterinvariant &= automaton.invariants[location]
+                invariant = automaton.invariants.get(location)
+                if invariant is not None:
+                    afterinvariant &= invariant
         # Accumulate the invariants of the locations after the transition
         for location, automaton in zip(newlocationvector, self.location_vector.context):
             # Only concrete locations are considered
             if location != '*':
-                beforeinvariant &= automaton.invariants[location]
+                invariant = automaton.invariants.get(location)
+                if invariant is not None:
+                    beforeinvariant &= invariant
 
         # Calculate the new zone
         newzone = DoubleSymbolicState._freeclocks(reset, self.zone.down & afterinvariant & resetzone) & guard & beforeinvariant
