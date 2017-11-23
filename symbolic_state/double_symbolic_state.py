@@ -163,7 +163,7 @@ class DoubleSymbolicState:
 
         # Accumulate the guards and resets of the edges from option
         for edge in option.values():
-            guard &= edge.guard
+            guard &= edge.guard.zone
             reset |= edge.reset
         # Calculate the resetzone by reseting all reset clocks in an unrestricted zone
         for clock in reset:

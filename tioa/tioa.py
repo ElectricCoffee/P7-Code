@@ -87,6 +87,7 @@ class Guard:
         assert(all(map(Guard.is_valid_op, ops)))
         
         self.ops = ops
+        self.zone = self.to_federation()
 
     @staticmethod
     def is_valid_op(op):
