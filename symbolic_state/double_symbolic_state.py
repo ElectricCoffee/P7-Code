@@ -190,8 +190,10 @@ class DoubleSymbolicState:
 
     @staticmethod
     def _freeclocks(clocks, zone):
+        newzone = zone.copy()
         for clock in clocks:
-            zone.freeClockInPlace(clock)
+            newzone.freeClockInPlace(clock)
+        return newzone
 
 def diff(u, k):
     """finds the differences between u and k
