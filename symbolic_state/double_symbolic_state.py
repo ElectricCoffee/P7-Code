@@ -69,7 +69,7 @@ class DoubleSymbolicState:
             predecessor = self._predecessor_from_option(option)
             # Only consider the predecessor if it has a non-empty zone
             if not predecessor.zone.isEmpty():
-                predecessors += predecessor
+                predecessors.append(predecessor)
         return predecessors
 
     def _get_predecessor_options(self, m, k):
@@ -153,11 +153,11 @@ class DoubleSymbolicState:
             # If the automaton is not in N
             if edge is None:
                 # The location remains the same
-                newlocations += location
+                newlocations.append(location)
             # Otherwise
             else:
                 #The new location is the initial location of the edge from option
-                newlocations += edge.initial_location
+                newlocations.append(edge.initial_location)
         # Initialize the resulting location vector with the new locations
         newlocationvector = self.location_vector.context.ContextLocationVector(newlocations)
 
