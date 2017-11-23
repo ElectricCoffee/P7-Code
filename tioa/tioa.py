@@ -69,18 +69,19 @@ class Guard:
     # a list of legal relations
     _relations = ['<', '<=', '>', '>=']
     
-    def __init__(self, *ops):
+    def __init__(self, context, *ops):
         """Initialises the Guard
 
         *ops -- a list of tuples of the form (clock, value, relation).
         """
         # assert that all the tuples in ops are valid
-        assert(all(map(Guard.is_valid_op, ops)))
+        assert(all(map(lambda op: Guard.is_valid_op(op, context), ops)))
         
         self.ops = ops
+        self.context = context
 
     @staticmethod
-    def is_valid_op(op):
+    def is_valid_op(op, context):
         """Checks if an ops-triple is valid.
 
         op -- A triple of the form (clock, value, relation)
@@ -90,7 +91,8 @@ class Guard:
         return  isinstance(clock, Clock) \
             and isinstance(value, Number) \
             and isinstance(relation, str) \
-            and relation in _relations
+            and relation in _relations \
+            and clock.context == context
 
     @staticmethod
     def _tuple_to_federation(op):
@@ -117,7 +119,10 @@ class Guard:
             
     def to_federation(self):
         """Converts all the clocks and values into a single federation."""
-        return reduce(lambda x, y: x & y, self.to_federations())
+        if ops == []:
+            return self.context.getTautologyFederation()
+        else:
+            return reduce(lambda x, y: x & y, self.to_federations())
 
     def clocks(self):
         """Gets all the clocks in ops."""
