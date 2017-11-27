@@ -6,6 +6,9 @@ class DoubleSymbolicState:
         self.location_vector = location_vector
         self.zone = zone
 
+    def __eq__(self, other):
+        return self.mk_equivalence(other, self.zone.context.clocks, self.location_vector.context)
+
     def k_equivalence(self, other, k):
         """Determind if self and other is k-equivalent
 
