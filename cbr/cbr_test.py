@@ -34,8 +34,8 @@ class double_symbolic_state_test(unittest.TestCase):
     def test_pre_from_option(self):
         self.dss1 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["c", "f"]), self.c.getTautologyFederation())
         self.dss2 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["b", "e"]), self.c.getTautologyFederation())
-        self.assertEqual(self.dss1._predecessor_from_option({self.t1:Edge("b", "h", Guard(self.c), set(), "c"),
-                                                             self.t2:Edge("e", "h", Guard(self.c), set(), "f")}), self.dss2)
+        self.assertTrue(self.dss1._predecessor_from_option({self.t1:Edge("b", "h", Guard(self.c), set(), "c"),
+                                                             self.t2:Edge("e", "h", Guard(self.c), set(), "f")}).zone.isEmpty())
 
     def test_sym_pre(self):
         self.dss1 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["c", "f"]), self.c.getTautologyFederation())
