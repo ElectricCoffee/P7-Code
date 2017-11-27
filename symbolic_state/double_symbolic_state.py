@@ -129,8 +129,12 @@ class DoubleSymbolicState:
         options -- A dictionary of edges grouped by automaton
         k -- An integer used for recursion.
         """
-        if len(options) == k:
+        if len(options) == 0:
             yield {}
+        elif len(options) == k + 1:
+            automaton, edges = options.items()[k]
+            for edge in edges:
+                yield {automaton:edge}
         else:
             automaton, edges = options.items()[k]
             for edge in edges:
