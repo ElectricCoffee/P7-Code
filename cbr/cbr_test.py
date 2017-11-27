@@ -32,7 +32,7 @@ class double_symbolic_state_test(unittest.TestCase):
             cls.clocks.add(clock)
 
     def test_generate_options(self):
-        self.assertEqual(DoubleSymbolicState._generate_options({"a":[2,3], "b":[5,7]}),[{"a":2,"b":5}, {"a":2,"b":7}, {"a":3,"b":5}, {"a":3,"b":7}])
+        self.assertEqual(list(DoubleSymbolicState._generate_options({"a":[2,3], "b":[5,7]})),[{"a":2,"b":5}, {"a":2,"b":7}, {"a":3,"b":5}, {"a":3,"b":7}])
 
     def test_sym_pre(self):
         self.dss1 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["c", "f"]), self.c.getTautologyFederation())
