@@ -31,8 +31,8 @@ class double_symbolic_state_test(unittest.TestCase):
         for clock_name, clock in cls.c.items():
             cls.clocks.add(clock)
 
-    def test_preceeding_edge(self):
-        self.assertEqual(self.t1.preceeding_edges["c"], [Edge("b", "h", Guard(self.c), set(), "c")])
+    def test_generate_options(self):
+        self.assertEqual(DoubleSymbolicState._generate_options({"a":[2,3], "b":[5,7]}),[{"a":2,"b":5}, {"a":2,"b":7}, {"a":3,"b":5}, {"a":3,"b":7}])
 
     def test_sym_pre(self):
         self.dss1 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["c", "f"]), self.c.getTautologyFederation())
