@@ -27,15 +27,9 @@ class double_symbolic_state_test(unittest.TestCase):
 
         cls.autocon12 = AutomataContext([cls.t1, cls.t2])
 
-        cls.clocks =[]
+        cls.clocks = set()
         for clock_name, clock in cls.c.items():
-            cls.clocks.append(clock)
-
-    def test_pre_from_option(self):
-        self.dss1 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["c", "f"]), self.c.getTautologyFederation())
-        self.dss2 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["b", "e"]), self.c.getTautologyFederation())
-        self.assertListEqual(self.dss1._predecessor_from_option({self.t1:Edge("b", "h", Guard(self.c), set(), "c"),
-                                                             self.t2:Edge("e", "h", Guard(self.c), set(), "f")}).location_vector, self.dss2.location_vector)
+            cls.clocks.add(clock)
 
     def test_sym_pre(self):
         self.dss1 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["c", "f"]), self.c.getTautologyFederation())

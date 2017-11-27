@@ -136,7 +136,7 @@ class Guard:
 
     def clocks(self):
         """Gets all the clocks in ops."""
-        return map(lambda op: op[self._clock], self.ops)
+        return set(map(lambda op: op[self._clock], self.ops))
 
     def values(self):
         """Gets all the values in ops."""
