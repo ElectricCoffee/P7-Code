@@ -48,22 +48,22 @@ class double_symbolic_state_test(unittest.TestCase):
     def test_cbr_true_wu_zone(self):
         self.assertTrue(cbr(DoubleSymbolicState(LocationVector(["a", "d"]), self.c.getZeroFederation()),
                             DoubleSymbolicState(LocationVector(["c", "f"]), self.c.getZeroFederation()),
-                            [self.t1, self.t2]), self.c.items())
+                            [self.t1, self.t2], self.c.items()))
 
     def test_cbr_false_wu_zone(self):
         self.assertFalse(cbr(DoubleSymbolicState(LocationVector(["a", "l"]), self.c.getZeroFederation()),
                              DoubleSymbolicState(LocationVector(["c", "n"]), self.c.getZeroFederation()),
-                             [self.t1, self.t3]), self.c.items())
+                             [self.t1, self.t3], self.c.items()))
 
     def test_cbr_true_w_zone(self):
         self.assertTrue(cbr(DoubleSymbolicState(LocationVector(["a", "d"]), self.c.getZeroFederation()),
                             DoubleSymbolicState(LocationVector(["c", "f"]), self.c.getZeroFederation()),
-                            [self.t4, self.t5]), self.c.items())
+                            [self.t4, self.t5], self.c.items()))
 
     def test_cbr_false_w_zone(self):
         self.assertFalse(cbr(DoubleSymbolicState(LocationVector(["a", "l"]), self.c.getZeroFederation()),
                              DoubleSymbolicState(LocationVector(["c", "n"]), self.c.getZeroFederation()),
-                             [self.t4, self.t6]), self.c.items())
+                             [self.t4, self.t6], self.c.items()))
 
 if __name__ == '__main__':
             unittest.main()
