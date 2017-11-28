@@ -7,6 +7,9 @@ class ContextLocationVector(LocationVector):
         self.context = context
         super(ContextLocationVector, self).__init__(locations)
 
+    def __hash__(self):
+        return hash(tuple(self))
+
     @staticmethod
     def static_m_equivalence(location_vector, other_location_vector, m):
         """Checks M_equivalence between two ContextLocationVectors ContextLocationVector

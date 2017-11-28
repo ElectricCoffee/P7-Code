@@ -20,3 +20,6 @@ class LocationVector(list):
     def __gt__(self, other):
         """Checks if other is strictly included in self"""
         return other <= self and self != other
+
+    def __hash__(self):
+        return hash(tuple(self))
