@@ -32,6 +32,8 @@ class TIOA:
     def _generate_preceeding_edges(self):
         target = lambda edge: edge.target_location
         self.preceeding_edges = {}
+        for location in self.locations:
+            self.preceeding_edges[location] = []
         for key, group in groupby(sorted(self.edges, key = target), key = target):
             self.preceeding_edges[key] = list(group)
         self.preceeding_edges['*'] = self.edges
