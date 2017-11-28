@@ -1,5 +1,6 @@
 from symbolic_state.double_symbolic_state import *
 from dbm.udbm import *
+from operator import and_
 
 
 def cbr(dss_init, dss_goal, m, k):
@@ -24,11 +25,10 @@ def cbr(dss_init, dss_goal, m, k):
                 if symbolicstate.intersects(dss_init):
                     return True
                 else:
-                    for symbolicstate_new in passed:
-                        if not symbolicstate <= symbolicstate_new:
-                            passed.add(symbolicstate)
-                            next = symbolicstate.mk_predecessors(m_new, k_new)
-                            for j in next:
-                                wait.add(j)
+                    if reduce(and_, map(lambda state: not symbolicstate <= state, passed)):
+                        passed.add(symbolicstate)
+                        next = symbolicstate.mk_predecessors(m_new, k_new)
+                        for j in next:
+                            wait.add(j)
             wait = passed
     return False
