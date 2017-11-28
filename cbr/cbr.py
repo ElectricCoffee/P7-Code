@@ -19,7 +19,8 @@ def cbr(dss_init, dss_goal, m, k):
         for clock in k:
             k_new.add(clock)
             passed = set()
-            for symbolicstate in wait:
+            while len(wait) != 0:
+                symbolicstate = wait.pop()
                 if symbolicstate == dss_init:
                     return True
                 else:
