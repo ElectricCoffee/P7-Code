@@ -215,7 +215,7 @@ class DoubleSymbolicState:
         return newzone
 
     def __le__(self, other):
-        return self.zone <= other.zone and self.location_vector <= other.locationvector
+        return self.zone <= other.zone and self.location_vector <= other.location_vector
 
 
 def diff(u, k):
