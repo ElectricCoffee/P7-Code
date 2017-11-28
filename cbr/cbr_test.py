@@ -45,22 +45,22 @@ class double_symbolic_state_test(unittest.TestCase):
         self.dss2 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["b", "e"]), self.c.getTautologyFederation())
         self.assertTrue(self.dss1.mk_predecessors([self.t1, self.t2], self.clocks) == [self.dss2])
 
-    def tes_cbr_true_wu_zone(self):
+    def test_cbr_true_wu_zone(self):
         self.assertTrue(cbr(DoubleSymbolicState(LocationVector(["a", "d"]), self.c.getZeroFederation()),
                             DoubleSymbolicState(LocationVector(["c", "f"]), self.c.getZeroFederation()),
                             [self.t1, self.t2]), self.c.items())
 
-    def tes_cbr_false_wu_zone(self):
+    def test_cbr_false_wu_zone(self):
         self.assertFalse(cbr(DoubleSymbolicState(LocationVector(["a", "l"]), self.c.getZeroFederation()),
                              DoubleSymbolicState(LocationVector(["c", "n"]), self.c.getZeroFederation()),
                              [self.t1, self.t3]), self.c.items())
 
-    def tes_cbr_true_w_zone(self):
+    def test_cbr_true_w_zone(self):
         self.assertTrue(cbr(DoubleSymbolicState(LocationVector(["a", "d"]), self.c.getZeroFederation()),
                             DoubleSymbolicState(LocationVector(["c", "f"]), self.c.getZeroFederation()),
                             [self.t4, self.t5]), self.c.items())
 
-    def tes_cbr_false_w_zone(self):
+    def test_cbr_false_w_zone(self):
         self.assertFalse(cbr(DoubleSymbolicState(LocationVector(["a", "l"]), self.c.getZeroFederation()),
                              DoubleSymbolicState(LocationVector(["c", "n"]), self.c.getZeroFederation()),
                              [self.t4, self.t6]), self.c.items())
