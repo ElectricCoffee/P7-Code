@@ -220,7 +220,8 @@ def diff(u, k):
     k -- is a set of clocknames
     """
     result = []
+    k_names = map(lambda clk: clk.name, k)
     for clock_name, clock in u.context.items():
-        if not (clock_name in k):
+        if not (clock_name in k_names):
             result.append(clock)
     return result
