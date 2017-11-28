@@ -29,6 +29,5 @@ def cbr(dss_init, dss_goal, m, k):
                             next = symbolicstate.mk_predecessors(m_new, k_new)
                             for j in next:
                                 wait.add(j)
-            for x in passed:
-                wait.add(x)
+            wait = passed
     return False
