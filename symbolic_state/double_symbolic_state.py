@@ -12,6 +12,9 @@ class DoubleSymbolicState:
     def __hash__(self):
         return hash((self.location_vector, self.zone))
 
+    def intersects(self, other):
+        return self.location_vector.intersects(other.location_vector) and not (self.zone & other.zone).isEmpty()
+
     def k_equivalence(self, other, k):
         """Determind if self and other is k-equivalent
 

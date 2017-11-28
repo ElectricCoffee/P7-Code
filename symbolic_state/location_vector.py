@@ -23,3 +23,9 @@ class LocationVector(list):
 
     def __hash__(self):
         return hash(tuple(self))
+
+    def intersects(self, other):
+        for location, otherlocation in zip(self, other):
+            if location != '*' and otherlocation != '*' and location != otherlocation:
+                return False
+        return True
