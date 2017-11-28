@@ -38,7 +38,7 @@ class double_symbolic_state_test(unittest.TestCase):
 
     def test_get_predecessor_options(self):
         self.dss1 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["c", "f"]), self.c.getTautologyFederation())
-        self.assertEqual(self.dss1._get_predecessor_options([self.t1, self.t2], self.clocks), [{self.t1:self.e1, self.t2:self.e2}])
+        self.assertEqual(list(self.dss1._get_predecessor_options([self.t1, self.t2], self.clocks)), [{self.t1:self.e1, self.t2:self.e2}])
 
     def test_sym_pre(self):
         self.dss1 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["c", "f"]), self.c.getTautologyFederation())
