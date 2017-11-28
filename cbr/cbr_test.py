@@ -45,6 +45,11 @@ class double_symbolic_state_test(unittest.TestCase):
         self.dss2 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["b", "e"]), self.c.getTautologyFederation())
         self.assertListEqual(self.dss1.mk_predecessors([self.t1, self.t2], self.clocks), [self.dss2])
 
+    def test_sym_pre_failure(self):
+        self.dss1 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["c", "f"]), self.c.getTautologyFederation())
+        self.dss2 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["b", "e"]), self.c.getTautologyFederation())
+        self.assertListEqual(self.dss1.mk_predecessors([self.t1, self.t2], self.clocks), [])
+
     def tes_cbr_true_wu_zone(self):
         self.assertTrue(cbr(DoubleSymbolicState(LocationVector(["a", "d"]), self.c.getZeroFederation()),
                             DoubleSymbolicState(LocationVector(["c", "f"]), self.c.getZeroFederation()),
