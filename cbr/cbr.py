@@ -21,7 +21,7 @@ def cbr(dss_init, dss_goal, m, k):
             passed = set()
             while len(wait) != 0:
                 symbolicstate = wait.pop()
-                if symbolicstate == dss_init:
+                if symbolicstate.intersects(dss_init):
                     return True
                 else:
                     for symbolicstate_new in passed:
