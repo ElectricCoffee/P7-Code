@@ -25,7 +25,7 @@ def cbr(dss_init, dss_goal, m, k):
                 if symbolicstate.intersects(dss_init):
                     return True
                 else:
-                    if reduce(and_, map(lambda state: not symbolicstate <= state, passed)):
+                    if len(passed) == 0 or reduce(and_, map(lambda state: not symbolicstate <= state, passed)):
                         passed.add(symbolicstate)
                         next = symbolicstate.mk_predecessors(m_new, k_new)
                         for j in next:
