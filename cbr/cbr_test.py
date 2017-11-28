@@ -11,10 +11,12 @@ class double_symbolic_state_test(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.c = Context(['x', 'y'], 'c')
+        cls.e1 = Edge("b", "h", Guard(cls.c), set(), "c")
+        cls.e2 = Edge("e", "h", Guard(cls.c), set(), "f")
         cls.t1 = TIOA(["a", "b", "c"], "a", ['x', 'y'],
-                      [Edge("a", "g", Guard(cls.c), set(), "b"), Edge("b", "h", Guard(cls.c), set(), "c")], {"g"}, {"h"}, {})
+                      [Edge("a", "g", Guard(cls.c), set(), "b"), cls.e1], {"g"}, {"h"}, {})
         cls.t2 = TIOA(["d", "e", "f"], "d", ['x', 'y'],
-                      [Edge("d", "g", Guard(cls.c), set(), "e"), Edge("e", "h", Guard(cls.c), set(), "f")], {"h"}, {"g"}, {})
+                      [Edge("d", "g", Guard(cls.c), set(), "e"), cls.e2], {"h"}, {"g"}, {})
         cls.t3 = TIOA(["l", "m", "n"], "l", ['x', 'y'],
                       [Edge("l", "r", Guard(cls.c), set(), "m"), Edge("m", "t", Guard(cls.c), set(), "n")], {"r"}, {"t"}, {})
 
@@ -33,6 +35,10 @@ class double_symbolic_state_test(unittest.TestCase):
 
     def test_generate_options(self):
         self.assertEqual(list(DoubleSymbolicState._generate_options({"a":[2,3], "b":[5,7]})),[{"a":2,"b":5}, {"a":2,"b":7}, {"a":3,"b":5}, {"a":3,"b":7}])
+
+    def test_get_predecessor_options(self):
+        self.dss1 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["c", "f"]), self.c.getTautologyFederation())
+        self.assertEqual(self.dss1._get_predecessor_options([self.t1, self.t2], self.clocks), [{self.t1:self.e1, self.t2:self.e2}])
 
     def test_sym_pre(self):
         self.dss1 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["c", "f"]), self.c.getTautologyFederation())
