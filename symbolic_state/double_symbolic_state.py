@@ -1,5 +1,5 @@
 from dbm.udbm import Federation
-from operator import and_
+from operator import or_
 
 class DoubleSymbolicState:
     def __init__(self, location_vector, zone):
@@ -80,12 +80,12 @@ class DoubleSymbolicState:
         k -- An iterable of clocks
         """
         # Store all actions known to m as a set
-        actions = reduce(and_, map(lambda auto: auto.input_actions & auto.output_actions, m))
+        actions = reduce(or_, map(lambda auto: auto.input_actions | auto.output_actions, m))
 
         # Remove all actions known outside of m
         for automaton in self.location_vector.context:
             if automaton not in m:
-                actions -= automaton.input_actions & automaton.output_actions
+                actions -= automaton.input_actions | automaton.output_actions
 
         optionsbyaction = {}
         # The resulting options will be grouped by action
@@ -104,7 +104,7 @@ class DoubleSymbolicState:
                 edges = filter(is_valid_edge, automaton.preceeding_edges[location])
                 if edges == []:
                     # If there are no such edges and the automaton knows of the action a,
-                    if a in automaton.input_actions & automaton.output_actions:
+                    if a in automaton.input_actions | automaton.output_actions:
                         # then the action a cannot be taken since no possible N can exist.
                         invalidactions.add(a)
                     # Else the action could still be valid, but this automaton is not in N. Nothing should be done.
