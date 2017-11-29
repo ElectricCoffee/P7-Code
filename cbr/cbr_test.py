@@ -101,7 +101,7 @@ class double_symbolic_state_test(unittest.TestCase):
     def test_cbr_false_unsync_guards(self):
         self.auto1 = TIOA(["a", "b"], "a", {self.c.x},
                        [Edge("a", "g", Guard(self.c, (self.c.x, 5, '<')), set(), "b")], {"g"}, set(), {})
-        self.auto2 = TIOA(["c", "d"], "a", {self.c.y},
+        self.auto2 = TIOA(["c", "d"], "c", {self.c.y},
                        [Edge("c", "g", Guard(self.c, (self.c.y, 5, '>')), set(), "d")], set(), {"g"}, {})
         self.autocontext = AutomataContext([self.auto1, self.auto2])
         self.dss1 = DoubleSymbolicState(self.autocontext.ContextLocationVector(["a", "c"]),
@@ -114,7 +114,7 @@ class double_symbolic_state_test(unittest.TestCase):
     def test_cbr_true_sync_guards(self):
         self.auto1 = TIOA(["a", "b"], "a", {self.c.x},
                       [Edge("a", "g", Guard(self.c, (self.c.x, 5, '<=')), set(), "b")], {"g"}, set(), {})
-        self.auto2 = TIOA(["c", "d"], "a", {self.c.y},
+        self.auto2 = TIOA(["c", "d"], "c", {self.c.y},
                       [Edge("c", "g", Guard(self.c, (self.c.y, 5, '>=')), set(), "d")], set(), {"g"}, {})
         self.autocontext = AutomataContext([self.auto1, self.auto2])
         self.dss1 = DoubleSymbolicState(self.autocontext.ContextLocationVector(["a", "c"]),
