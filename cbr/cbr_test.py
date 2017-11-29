@@ -110,5 +110,18 @@ class double_symbolic_state_test(unittest.TestCase):
                                         self.c.getTautologyFederation())
         self.assertFalse(cbr(self.dss1, self.dss2, [self.auto1, self.auto2], self.clocks))
 
+
+    def test_cbr_true_sync_guards(self):
+        self.auto1 = TIOA(["a", "b"], "a", {self.c.x},
+                      [Edge("a", "g", Guard(self.c, (self.c.x, 5, '<=')), set(), "b")], {"g"}, set(), {})
+        self.auto2 = TIOA(["c", "d"], "a", {self.c.y},
+                      [Edge("c", "g", Guard(self.c, (self.c.y, 5, '>=')), set(), "d")], set(), {"g"}, {})
+        self.autocontext = AutomataContext([self.auto1, self.auto2])
+        self.dss1 = DoubleSymbolicState(self.autocontext.ContextLocationVector(["a", "c"]),
+                                    self.c.getZeroFederation())
+        self.dss2 = DoubleSymbolicState(self.autocontext.ContextLocationVector(["b", "d"]),
+                                    self.c.getTautologyFederation())
+        self.assertTrue(cbr(self.dss1, self.dss2, [self.auto1, self.auto2], self.clocks))
+
 if __name__ == '__main__':
             unittest.main()
