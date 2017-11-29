@@ -27,7 +27,7 @@ class double_symbolic_state_test(unittest.TestCase):
                       [Edge("d", "g", Guard(cls.c, (cls.c['x'], 2, '>')), set(), "e"),
                        Edge("e", "h", Guard(cls.c), set(), "f")], {"h"}, {"g"}, {})
         cls.t6 = TIOA(["l", "m", "n"], "l", set(cls.c.clocks),
-                      [Edge("l", "g", Guard(cls.c, (cls.c['x'], 2, '<')), set(), "m"), #der er en fejl, i og med at clocks med samme navn på forskelige ure reelt set er to forskellige
+                      [Edge("l", "g", Guard(cls.c, (cls.c['x'], 2, '<')), set(), "m"),
                        Edge("m", "h", Guard(cls.c), set(), "n")], {"h"}, {"g"}, {})
 
         cls.t7 = TIOA(["a", "b", "c"], "a", set(cls.c.clocks),
