@@ -12,6 +12,7 @@ def cbr(dss_init, dss_goal, m, k):
     m -- An iterable of machines
     k -- An iterable of clocks
     """
+    init_up = DoubleSymbolicState(dss_init.location_vector, dss_init.zone.up())
     wait = {dss_goal}
     m_new = set()
     k_new = set()
@@ -22,7 +23,7 @@ def cbr(dss_init, dss_goal, m, k):
             passed = set()
             while len(wait) != 0:
                 symbolicstate = wait.pop()
-                if symbolicstate.intersects(dss_init):
+                if symbolicstate.intersects(init_up):
                     return True
                 else:
                     if len(passed) == 0 or reduce(and_, map(lambda state: not symbolicstate <= state, passed)):
