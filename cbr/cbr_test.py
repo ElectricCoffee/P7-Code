@@ -37,7 +37,7 @@ class double_symbolic_state_test(unittest.TestCase):
                       [Edge("d", "g", Guard(cls.c), set(), "e"),
                        Edge("e", "h", Guard(cls.c), set(), "f")], {"h"}, {"g"}, {"e":(cls.c.x == 1)})
         cls.t9 = TIOA(["l", "m", "n"], "l", set(cls.c.clocks),
-                      [Edge("l", "g", Guard(cls.c), set(cls.c.x), "m"),
+                      [Edge("l", "g", Guard(cls.c), set(cls.c['x']), "m"),
                        Edge("m", "h", Guard(cls.c), set(), "n")], {"h"}, {"g"}, {"m":(cls.c.x == 1)})
 
         cls.autocon12 = AutomataContext([cls.t1, cls.t2])
