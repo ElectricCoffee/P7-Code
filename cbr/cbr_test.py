@@ -40,12 +40,26 @@ class double_symbolic_state_test(unittest.TestCase):
                       [Edge("l", "g", Guard(cls.c), set([cls.c['x']]), "m"),
                        Edge("m", "h", Guard(cls.c), set(), "n")], {"h"}, {"g"}, {"m":(cls.c.x == 1)})
 
+        cls.t10 = TIOA(["a", "b", "c"], "a", set(cls.c.clocks),
+                      [Edge("a", "g", Guard(cls.c), set(), "b"),
+                       Edge("b", "h", Guard(cls.c), set(), "c")], {"g"}, {"h"}, {})
+        cls.t11 = TIOA(["d", "e", "f"], "d", set(cls.c.clocks),
+                      [Edge("d", "g", Guard(cls.c), set(), "e"),
+                       Edge("e", "h", Guard(cls.c, (cls.c['x'], 1, '<')), set(), "f"),
+                       Edge("e", None, Guard(cls.c), set([cls.c['x']]), "e")], {"h"}, {"g"}, {})
+        cls.t12 = TIOA(["l", "m", "n"], "l", set(cls.c.clocks),
+                      [Edge("l", "g", Guard(cls.c), set([cls.c['x']]), "m"),
+                       Edge("m", "h", Guard(cls.c, (cls.c['x'], 1, '>')), set(), "n"),
+                       Edge("m", None, Guard(cls.c), set([cls.c['x']]), "m")], {"h"}, {"g"}, {"m": (cls.c.x == 1)})
+
         cls.autocon12 = AutomataContext([cls.t1, cls.t2])
         cls.autocon13 = AutomataContext([cls.t1, cls.t3])
         cls.autocon45 = AutomataContext([cls.t4, cls.t5])
         cls.autocon46 = AutomataContext([cls.t4, cls.t6])
         cls.autocon78 = AutomataContext([cls.t7, cls.t8])
         cls.autocon79 = AutomataContext([cls.t7, cls.t9])
+        cls.autocon1011 = AutomataContext([cls.t10, cls.t11])
+        cls.autocon1012 = AutomataContext([cls.t10, cls.t12])
 
 
         cls.clocks = set()
@@ -110,7 +124,6 @@ class double_symbolic_state_test(unittest.TestCase):
                                         self.c.getTautologyFederation())
         self.assertFalse(cbr(self.dss1, self.dss2, [self.auto1, self.auto2], self.clocks))
 
-
     def test_cbr_true_sync_guards(self):
         self.auto1 = TIOA(["a", "b"], "a", {self.c.x},
                       [Edge("a", "g", Guard(self.c, (self.c.x, 5, '<=')), set(), "b")], {"g"}, set(), {})
@@ -122,6 +135,20 @@ class double_symbolic_state_test(unittest.TestCase):
         self.dss2 = DoubleSymbolicState(self.autocontext.ContextLocationVector(["b", "d"]),
                                     self.c.getTautologyFederation())
         self.assertTrue(cbr(self.dss1, self.dss2, [self.auto1, self.auto2], self.clocks))
+
+    def test_cbr_true1_w_loop(self):
+        self.dss1 = DoubleSymbolicState(self.autocon1011.ContextLocationVector(["a", "d"]),
+                                        self.c.getTautologyFederation())
+        self.dss2 = DoubleSymbolicState(self.autocon1011.ContextLocationVector(["c", "f"]),
+                                        self.c.getTautologyFederation())
+        self.assertTrue(cbr(self.dss1, self.dss2, [self.t10, self.t11], self.clocks))
+
+    def test_cbr_true2_w_loop(self):
+        self.dss1 = DoubleSymbolicState(self.autocon1012.ContextLocationVector(["a", "l"]),
+                                        self.c.getTautologyFederation())
+        self.dss2 = DoubleSymbolicState(self.autocon1012.ContextLocationVector(["c", "n"]),
+                                        self.c.getTautologyFederation())
+        self.assertTrue(cbr(self.dss1, self.dss2, [self.t10, self.t12], self.clocks))
 
 if __name__ == '__main__':
             unittest.main()
