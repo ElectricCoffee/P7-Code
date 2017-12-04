@@ -46,7 +46,7 @@ cbr(dssinit, dssgoal, [t1, t2, t3, t4, t5, t6], clocks)
 time_end = time.time()
 
 time_dif = time_end - time_start
-print("CBR with all automatas in M, time spent: " + time_dif)
+print("CBR with all automatas in M, time spent: " + str(time_dif))
 
 
 
@@ -58,4 +58,4 @@ cbr(dssinit, dssgoal, [t1, t2, t3, t4, t5, t7], clocks)
 time_end = time.time()
 
 time_dif = time_end - time_start
-print("CBR without all automatas in M, time spent: " + time_dif)
+print("CBR without all automatas in M, time spent: " + str(time_dif))
