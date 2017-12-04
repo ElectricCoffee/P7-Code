@@ -37,7 +37,7 @@ for clock_name, clock in c.items():
     clocks.add(clock)
 
 
-
+#test med al statespace
 dssinit = DoubleSymbolicState(autocon1.ContextLocationVector(["a1", "*", "*", "*", "*", "*"]), c.getTautologyFederation())
 dssgoal = DoubleSymbolicState(autocon1.ContextLocationVector(["*", "*", "*", "*", "*", "b6"]), c.getTautologyFederation())
 
@@ -49,9 +49,9 @@ time_dif = time_end - time_start
 print("CBR with all automatas in M, time spent: " + str(time_dif))
 
 
-
-dssinit = DoubleSymbolicState(autocon1.ContextLocationVector(["a1", "*", "*", "*", "*", "*"]), c.getTautologyFederation())
-dssgoal = DoubleSymbolicState(autocon1.ContextLocationVector(["*", "*", "*", "*", "*", "b7"]), c.getTautologyFederation())
+#test uden al statespace
+dssinit = DoubleSymbolicState(autocon2.ContextLocationVector(["a1", "*", "*", "*", "*", "*"]), c.getTautologyFederation())
+dssgoal = DoubleSymbolicState(autocon2.ContextLocationVector(["*", "*", "*", "*", "*", "b7"]), c.getTautologyFederation())
 
 time_start = time.time()
 cbr(dssinit, dssgoal, [t1, t2, t3, t4, t5, t7], clocks)
