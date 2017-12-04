@@ -41,21 +41,24 @@ for clock_name, clock in c.items():
 dssinit = DoubleSymbolicState(autocon1.ContextLocationVector(["a1", "*", "*", "*", "*", "*"]), c.getTautologyFederation())
 dssgoal = DoubleSymbolicState(autocon1.ContextLocationVector(["*", "*", "*", "*", "*", "b6"]), c.getTautologyFederation())
 
-time_start = time.time()
+time_start1 = time.time()
 cbr(dssinit, dssgoal, [t1, t2, t3, t4, t5, t6], clocks)
-time_end = time.time()
+time_end1 = time.time()
 
-time_dif = (time_end - time_start) * 1000
-print("CBR with all automatas in M, time spent: " + str(time_dif))
+time_dif1 = (time_end1 - time_start1) * 1000
+print("CBR with all automatas in M, time spent: " + str(time_dif1))
 
 
 #test uden al statespace
 dssinit = DoubleSymbolicState(autocon2.ContextLocationVector(["a1", "*", "*", "*", "*", "*"]), c.getTautologyFederation())
 dssgoal = DoubleSymbolicState(autocon2.ContextLocationVector(["*", "b7", "*", "*", "*", "*"]), c.getTautologyFederation())
 
-time_start = time.time()
+time_start2 = time.time()
 cbr(dssinit, dssgoal, [t1, t7, t2, t3, t4, t5], clocks)
-time_end = time.time()
+time_end2 = time.time()
 
-time_dif = (time_end - time_start) * 1000
-print("CBR without all automatas in M, time spent: " + str(time_dif))
+time_dif2 = (time_end2 - time_start2) * 1000
+print("CBR without all automatas in M, time spent: " + str(time_dif2))
+
+factor = time_dif1 / time_dif2
+print("Factor between with and without, factor: " + str(factor))
