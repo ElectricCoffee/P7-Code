@@ -30,7 +30,7 @@ t7 = TIOA(["a7", "b7"], "a7", set(c.clocks),
           [Edge("a7", "a", Guard(c), set(), "b7")], {}, {}, {"a"})
 
 autocon1 = AutomataContext([t1, t2, t3, t4, t5, t6])
-autocon2 = AutomataContext([t1, t2, t3, t4, t5, t7])
+autocon2 = AutomataContext([t1, t7, t2, t3, t4, t5])
 
 clocks = set()
 for clock_name, clock in c.items():
@@ -45,17 +45,17 @@ time_start = time.time()
 cbr(dssinit, dssgoal, [t1, t2, t3, t4, t5, t6], clocks)
 time_end = time.time()
 
-time_dif = time_end - time_start
+time_dif = (time_end - time_start) * 1000
 print("CBR with all automatas in M, time spent: " + str(time_dif))
 
 
 #test uden al statespace
 dssinit = DoubleSymbolicState(autocon2.ContextLocationVector(["a1", "*", "*", "*", "*", "*"]), c.getTautologyFederation())
-dssgoal = DoubleSymbolicState(autocon2.ContextLocationVector(["*", "*", "*", "*", "*", "b7"]), c.getTautologyFederation())
+dssgoal = DoubleSymbolicState(autocon2.ContextLocationVector(["*", "b7", "*", "*", "*", "*"]), c.getTautologyFederation())
 
 time_start = time.time()
-cbr(dssinit, dssgoal, [t1, t2, t3, t4, t5, t7], clocks)
+cbr(dssinit, dssgoal, [t1, t7, t2, t3, t4, t5], clocks)
 time_end = time.time()
 
-time_dif = time_end - time_start
+time_dif = (time_end - time_start) * 1000
 print("CBR without all automatas in M, time spent: " + str(time_dif))
