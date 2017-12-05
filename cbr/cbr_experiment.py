@@ -13,21 +13,21 @@ t1 = TIOA(["a1", "b1"], "a1", set(c.clocks),
           [Edge("a1", "a", Guard(c), set(), "b1")], {}, {"a"}, {})
 t2 = TIOA(["a2", "b2", "c2"], "a2", set(c.clocks),
           [Edge("a2", "a", Guard(c), set(), "b2"),
-           Edge("b2", "b", Guard(c), set(), "c2")], {}, {"b"}, {"a"})
+           Edge("b2", "b", Guard(c), set(), "c2")], {"a"}, {"b"}, {})
 t3 = TIOA(["a3", "b3", "c3"], "a3", set(c.clocks),
           [Edge("a3", "b", Guard(c), set(), "b3"),
-           Edge("b3", "c", Guard(c), set(), "c3")], {}, {"c"}, {"b"})
+           Edge("b3", "c", Guard(c), set(), "c3")], {"b"}, {"c"}, {})
 t4 = TIOA(["a4", "b4", "c4"], "a4", set(c.clocks),
           [Edge("a4", "c", Guard(c), set(), "b4"),
-           Edge("b4", "d", Guard(c), set(), "c4")], {}, {"d"}, {"c"})
+           Edge("b4", "d", Guard(c), set(), "c4")], {"c"}, {"d"}, {})
 t5 = TIOA(["a5", "b5", "c5"], "a5", set(c.clocks),
           [Edge("a5", "d", Guard(c), set(), "b5"),
-           Edge("b5", "e", Guard(c), set(), "c5")], {}, {"e"}, {"d"})
+           Edge("b5", "e", Guard(c), set(), "c5")], {"d"}, {"e"}, {})
 t6 = TIOA(["a6", "b6"], "a6", set(c.clocks),
-          [Edge("a6", "e", Guard(c), set(), "b6")], {}, {}, {"e"})
+          [Edge("a6", "e", Guard(c), set(), "b6")], {"e"}, {}, {})
 
 t7 = TIOA(["a7", "b7"], "a7", set(c.clocks),
-          [Edge("a7", "a", Guard(c), set(), "b7")], {}, {}, {"a"})
+          [Edge("a7", "a", Guard(c), set(), "b7")], {"a"}, {}, {})
 
 autocon1 = AutomataContext([t1, t2, t3, t4, t5, t6])
 autocon2 = AutomataContext([t1, t7, t2, t3, t4, t5])
