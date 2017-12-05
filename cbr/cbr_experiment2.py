@@ -33,6 +33,7 @@ dssgoal2 = DoubleSymbolicState(autocon2.ContextLocationVector(["b"]), c.getTauto
 
 
 resfactor = 0
+print("How many iterations should the CBR run? ")
 nr = int(input())
 
 for x in range(0, nr):

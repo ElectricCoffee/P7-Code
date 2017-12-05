@@ -36,29 +36,31 @@ clocks = set()
 for clock_name, clock in c.items():
     clocks.add(clock)
 
-
-#test med al statespace
-dssinit = DoubleSymbolicState(autocon1.ContextLocationVector(["a1", "*", "*", "*", "*", "*"]), c.getTautologyFederation())
-dssgoal = DoubleSymbolicState(autocon1.ContextLocationVector(["*", "*", "*", "*", "*", "b6"]), c.getTautologyFederation())
-
-time_start1 = time.time()
-cbr(dssinit, dssgoal, [t1, t2, t3, t4, t5, t6], clocks)
-time_end1 = time.time()
-
-time_dif1 = (time_end1 - time_start1) * 1000
-print("CBR with all automatas in M, time spent: " + str(time_dif1))
-
+dssinit1 = DoubleSymbolicState(autocon1.ContextLocationVector(["a1", "*", "*", "*", "*", "*"]), c.getTautologyFederation())
+dssgoal1 = DoubleSymbolicState(autocon1.ContextLocationVector(["*", "*", "*", "*", "*", "b6"]), c.getTautologyFederation())
 
 #test uden al statespace
-dssinit = DoubleSymbolicState(autocon2.ContextLocationVector(["a1", "*", "*", "*", "*", "*"]), c.getTautologyFederation())
-dssgoal = DoubleSymbolicState(autocon2.ContextLocationVector(["*", "b7", "*", "*", "*", "*"]), c.getTautologyFederation())
+dssinit2 = DoubleSymbolicState(autocon2.ContextLocationVector(["a1", "*", "*", "*", "*", "*"]), c.getTautologyFederation())
+dssgoal2 = DoubleSymbolicState(autocon2.ContextLocationVector(["*", "b7", "*", "*", "*", "*"]), c.getTautologyFederation())
 
-time_start2 = time.time()
-cbr(dssinit, dssgoal, [t1, t7, t2, t3, t4, t5], clocks)
-time_end2 = time.time()
 
-time_dif2 = (time_end2 - time_start2) * 1000
-print("CBR without all automatas in M, time spent: " + str(time_dif2))
+resfactor = 0
+print("How many iterations should the CBR run? ")
+nr = int(input())
 
-factor = time_dif1 / time_dif2
-print("Factor between with and without, factor: " + str(factor))
+for x in range(0, nr):
+    time_start1 = time.time()
+    cbr(dssinit1, dssgoal1, [t1, t2, t3, t4, t5, t6], clocks)
+    time_end1 = time.time()
+
+    time_dif1 = (time_end1 - time_start1) * 1000
+
+    time_start2 = time.time()
+    cbr(dssinit2, dssgoal2, [t1, t7, t2, t3, t4, t5], clocks)
+    time_end2 = time.time()
+
+    time_dif2 = (time_end2 - time_start2) * 1000
+
+
+    resfactor += time_dif1 / time_dif2
+print("Factor between with and without, factor: " + str(resfactor/nr))
