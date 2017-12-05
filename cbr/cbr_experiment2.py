@@ -25,7 +25,7 @@ for clock_name, clock in c.items():
     clocks.add(clock)
 
 
-dssinit1 = DoubleSymbolicState(autocon1.ContextLocationVector(["a", "d"]), c.getTautologyFederation())
+dssinit1 = DoubleSymbolicState(autocon1.ContextLocationVector(["a", "c"]), c.getTautologyFederation())
 dssgoal1 = DoubleSymbolicState(autocon1.ContextLocationVector(["b", "*"]), c.getTautologyFederation())
 
 dssinit2 = DoubleSymbolicState(autocon2.ContextLocationVector(["a"]), c.getTautologyFederation())
