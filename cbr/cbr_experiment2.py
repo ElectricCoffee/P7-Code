@@ -25,28 +25,27 @@ for clock_name, clock in c.items():
     clocks.add(clock)
 
 
+dssinit1 = DoubleSymbolicState(autocon1.ContextLocationVector(["a", "d"]), c.getTautologyFederation())
+dssgoal1 = DoubleSymbolicState(autocon1.ContextLocationVector(["b", "*"]), c.getTautologyFederation())
 
-dssinit = DoubleSymbolicState(autocon1.ContextLocationVector(["a", "d"]), c.getTautologyFederation())
-dssgoal = DoubleSymbolicState(autocon1.ContextLocationVector(["b", "*"]), c.getTautologyFederation())
-
-time_start1 = time.time()
-cbr(dssinit, dssgoal, [t1, t2], clocks)
-time_end1 = time.time()
-
-time_dif1 = (time_end1 - time_start1) * 1000
-print("CBR with tick tock, time spent: " + str(time_dif1))
+dssinit2 = DoubleSymbolicState(autocon2.ContextLocationVector(["a"]), c.getTautologyFederation())
+dssgoal2 = DoubleSymbolicState(autocon2.ContextLocationVector(["b"]), c.getTautologyFederation())
 
 
+resfactor = 0
+nr = 1000
 
-dssinit = DoubleSymbolicState(autocon2.ContextLocationVector(["a"]), c.getTautologyFederation())
-dssgoal = DoubleSymbolicState(autocon2.ContextLocationVector(["b"]), c.getTautologyFederation())
+for x in range(0, nr):
+    time_start1 = time.time()
+    cbr(dssinit1, dssgoal1, [t1, t2], clocks)
+    time_end1 = time.time()
 
-time_start2 = time.time()
-cbr(dssinit, dssgoal, [t1], clocks)
-time_end2 = time.time()
+    time_dif1 = (time_end1 - time_start1)
 
-time_dif2 = (time_end2 - time_start2) * 1000
-print("CBR without tick tock, time spent: " + str(time_dif2))
+    time_start2 = time.time()
+    cbr(dssinit2, dssgoal2, [t1], clocks)
+    time_end2 = time.time()
 
-factor = time_dif1 / time_dif2
-print("Factor between with and without, factor: " + str(factor))
+    time_dif2 = (time_end2 - time_start2)
+    resfactor += time_dif1 / time_dif2
+print("Factor between with and without, factor: " + str(resfactor / nr))
