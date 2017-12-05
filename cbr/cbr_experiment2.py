@@ -10,10 +10,10 @@ import time
 c = Context(['x', 'y'], 'c')
 
 t1 = TIOA(["a", "b"], "a", set(c.clocks),
-          [Edge("a", "", Guard(c, (c['x'], 1000, '>')), set(), "b")], {}, {}, {})
+          [Edge("a", None, Guard(c, (c['x'], 1000, '>')), set(), "b")], {}, {}, {})
 t2 = TIOA(["c", "d"], "d", set(c.clocks),
-          [Edge("c", "a", Guard(c, (c['y'], 1, '>')), set(), "d"),
-           Edge("d", "b", Guard(c, (c['y'], 2, '>')), set([c['y']]), "c")], {}, {}, {"c":(c.y == 0), "d":(c.y == 1)})
+          [Edge("c", None, Guard(c, (c['y'], 1, '>')), set(), "d"),
+           Edge("d", None, Guard(c, (c['y'], 2, '>')), set([c['y']]), "c")], {}, {}, {"c":(c.y == 0), "d":(c.y == 1)})
 
 
 
