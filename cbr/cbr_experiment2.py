@@ -33,7 +33,7 @@ dssgoal2 = DoubleSymbolicState(autocon2.ContextLocationVector(["b"]), c.getTauto
 
 
 resfactor = 0
-nr = 1000
+nr = int(input())
 
 for x in range(0, nr):
     time_start1 = time.time()
