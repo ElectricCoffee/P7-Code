@@ -10,7 +10,7 @@ import time
 c = Context(['x', 'y'], 'c')
 
 t1 = TIOA(["a", "b"], "a", set(c.clocks),
-          [Edge("a", None, Guard(c, (c['x'], 1000, '>')), set(), "b")], set(), set(), {})
+          [Edge("a", None, Guard(c, (c['x'], 1, '<=')), set(), "b")], set(), set(), {})
 t2 = TIOA(["c"], "c", set(c.clocks),
           [Edge("c", None, Guard(c, (c['y'], 1, '>=')), set([c['y']]), "c")], set(), set(), {"c":(c.y >= 0) & (c.y <= 1)})
 
@@ -25,10 +25,10 @@ for clock_name, clock in c.items():
 
 
 dssinit1 = DoubleSymbolicState(autocon1.ContextLocationVector(["c", "a"]), c.getTautologyFederation())
-dssgoal1 = DoubleSymbolicState(autocon1.ContextLocationVector(["*", "b"]), c.getTautologyFederation())
+dssgoal1 = DoubleSymbolicState(autocon1.ContextLocationVector(["*", "b"]), Federation((c.y > 1000) & (c.x <= 1)))
 
 dssinit2 = DoubleSymbolicState(autocon2.ContextLocationVector(["a"]), c.getTautologyFederation())
-dssgoal2 = DoubleSymbolicState(autocon2.ContextLocationVector(["b"]), c.getTautologyFederation())
+dssgoal2 = DoubleSymbolicState(autocon2.ContextLocationVector(["b"]), Federation((c.y > 1000) & (c.x <= 1)))
 
 
 
