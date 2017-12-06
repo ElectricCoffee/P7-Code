@@ -38,15 +38,15 @@ time_dif1 = 0
 time_dif2 = 0
 
 for x in range(0, nr):
-    time_start1 = time.time()
+    time_start1 = time.clock()
     cbr(dssinit1, dssgoal1, [t2, t1], clocks)
-    time_end1 = time.time()
+    time_end1 = time.clock()
 
     time_dif1 += (time_end1 - time_start1)
 
-    time_start2 = time.time()
+    time_start2 = time.clock()
     cbr(dssinit2, dssgoal2, [t1], clocks)
-    time_end2 = time.time()
+    time_end2 = time.clock()
 
     time_dif2 += (time_end2 - time_start2)
 
