@@ -16,7 +16,7 @@ t2 = TIOA(["c"], "c", set(c.clocks),
 
 
 
-autocon1 = AutomataContext([t1, t2])
+autocon1 = AutomataContext([t2, t1])
 autocon2 = AutomataContext([t1])
 
 clocks = set()
@@ -24,8 +24,8 @@ for clock_name, clock in c.items():
     clocks.add(clock)
 
 
-dssinit1 = DoubleSymbolicState(autocon1.ContextLocationVector(["a", "c"]), c.getTautologyFederation())
-dssgoal1 = DoubleSymbolicState(autocon1.ContextLocationVector(["b", "*"]), c.getTautologyFederation())
+dssinit1 = DoubleSymbolicState(autocon1.ContextLocationVector(["c", "a"]), c.getTautologyFederation())
+dssgoal1 = DoubleSymbolicState(autocon1.ContextLocationVector(["*", "b"]), c.getTautologyFederation())
 
 dssinit2 = DoubleSymbolicState(autocon2.ContextLocationVector(["a"]), c.getTautologyFederation())
 dssgoal2 = DoubleSymbolicState(autocon2.ContextLocationVector(["b"]), c.getTautologyFederation())
@@ -37,7 +37,7 @@ nr = int(input())
 
 for x in range(0, nr):
     time_start1 = time.time()
-    cbr(dssinit1, dssgoal1, [t1, t2], clocks)
+    cbr(dssinit1, dssgoal1, [t2, t1], clocks)
     time_end1 = time.time()
 
     time_dif1 = (time_end1 - time_start1)
