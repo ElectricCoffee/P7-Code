@@ -26,6 +26,17 @@ class TIOA:
         self.input_actions = input_actions
         self.output_actions = output_actions
         self.invariants = invariants
+        self.preceeding_edges = {}
+        self._generate_preceeding_edges()
+
+    def _generate_preceeding_edges(self):
+        target = lambda edge: edge.target_location
+        self.preceeding_edges = {}
+        for location in self.locations:
+            self.preceeding_edges[location] = []
+        for key, group in groupby(sorted(self.edges, key = target), key = target):
+            self.preceeding_edges[key] = list(group)
+        self.preceeding_edges['*'] = self.edges
 
     def is_valid_edge(self, edge):
         return \
@@ -69,18 +80,20 @@ class Guard:
     # a list of legal relations
     _relations = ['<', '<=', '>', '>=']
     
-    def __init__(self, *ops):
+    def __init__(self, context, *ops):
         """Initialises the Guard
 
         *ops -- a list of tuples of the form (clock, value, relation).
         """
         # assert that all the tuples in ops are valid
-        assert(all(map(Guard.is_valid_op, ops)))
+        assert(all(map(lambda op: Guard.is_valid_op(op, context), ops)))
         
-        self.ops = ops
+        self.ops = list(ops)
+        self.context = context
+        self.zone = self.to_federation()
 
     @staticmethod
-    def is_valid_op(op):
+    def is_valid_op(op, context):
         """Checks if an ops-triple is valid.
 
         op -- A triple of the form (clock, value, relation)
@@ -90,7 +103,8 @@ class Guard:
         return  isinstance(clock, Clock) \
             and isinstance(value, Number) \
             and isinstance(relation, str) \
-            and relation in _relations
+            and clock.context == context \
+            and relation in Guard._relations
 
     @staticmethod
     def _tuple_to_federation(op):
@@ -113,15 +127,18 @@ class Guard:
 
     def to_federations(self):
         """Converts the clocks and values into a list of federations."""
-        return map(Guard._tuple_to_federation, ops)
+        return map(Guard._tuple_to_federation, self.ops)
             
     def to_federation(self):
         """Converts all the clocks and values into a single federation."""
-        return reduce(lambda x, y: x & y, self.to_federations())
+        if self.ops == []:
+            return self.context.getTautologyFederation()
+        else:
+            return reduce(lambda x, y: x & y, self.to_federations())
 
     def clocks(self):
         """Gets all the clocks in ops."""
-        return map(lambda op: op[self._clock], self.ops)
+        return set(map(lambda op: op[self._clock], self.ops))
 
     def values(self):
         """Gets all the values in ops."""
@@ -143,4 +160,7 @@ class Guard:
             max_clocks[key] = max([op[self._value] for op in group])
 
         return max_clocks
+
+    def k_sorted(self, k):
+        return self.clocks() <= k
         
