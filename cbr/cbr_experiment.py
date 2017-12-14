@@ -50,13 +50,13 @@ nr = int(input())
 
 for x in range(0, nr):
     time_start1 = time.clock()
-    cbr(dssinit1, dssgoal1, [t1, t2, t3, t4, t5, t6], clocks)
+    cbr(dssinit1, {dssgoal1}, [t1, t2, t3, t4, t5, t6], clocks)
     time_end1 = time.clock()
 
     time_dif1 = (time_end1 - time_start1) * 1000
 
     time_start2 = time.clock()
-    cbr(dssinit2, dssgoal2, [t1, t7, t2, t3, t4, t5], clocks)
+    cbr(dssinit2, {dssgoal2}, [t1, t7, t2, t3, t4, t5], clocks)
     time_end2 = time.clock()
 
     time_dif2 = (time_end2 - time_start2) * 1000
