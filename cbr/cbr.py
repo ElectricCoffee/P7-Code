@@ -13,7 +13,7 @@ def cbr(dss_init, dss_goal, m, k):
     k -- An iterable of clocks
     """
     init_up = DoubleSymbolicState(dss_init.location_vector, dss_init.zone.up())
-    wait = {dss_goal}
+    wait = dss_goal
     m_new = set()
     k_new = set()
     for automat in m:

@@ -81,36 +81,36 @@ class double_symbolic_state_test(unittest.TestCase):
     def test_cbr_true_wu_zone(self):
         self.dss1 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["a", "d"]), self.c.getTautologyFederation())
         self.dss2 = DoubleSymbolicState(self.autocon12.ContextLocationVector(["c", "f"]), self.c.getTautologyFederation())
-        self.assertTrue(cbr(self.dss1, self.dss2, [self.t1, self.t2], self.clocks))
+        self.assertTrue(cbr(self.dss1, {self.dss2}, [self.t1, self.t2], self.clocks))
 
     def test_cbr_false_wu_zone(self):
         self.dss1 = DoubleSymbolicState(self.autocon13.ContextLocationVector(["a", "l"]), self.c.getTautologyFederation())
         self.dss2 = DoubleSymbolicState(self.autocon13.ContextLocationVector(["c", "n"]), self.c.getTautologyFederation())
-        self.assertFalse(cbr(self.dss1, self.dss2, [self.t1, self.t3], self.clocks))
+        self.assertFalse(cbr(self.dss1, {self.dss2}, [self.t1, self.t3], self.clocks))
 
     def test_cbr_true_w_zone(self):
         self.dss1 = DoubleSymbolicState(self.autocon45.ContextLocationVector(["a", "d"]), self.c.getTautologyFederation())
         self.dss2 = DoubleSymbolicState(self.autocon45.ContextLocationVector(["c", "f"]), self.c.getTautologyFederation())
-        self.assertTrue(cbr(self.dss1, self.dss2, [self.t4, self.t5], self.clocks))
+        self.assertTrue(cbr(self.dss1, {self.dss2}, [self.t4, self.t5], self.clocks))
 
     def test_cbr_false_w_zone(self):
         self.dss1 = DoubleSymbolicState(self.autocon46.ContextLocationVector(["a", "l"]), self.c.getTautologyFederation())
         self.dss2 = DoubleSymbolicState(self.autocon46.ContextLocationVector(["c", "n"]), self.c.getTautologyFederation())
-        self.assertFalse(cbr(self.dss1, self.dss2, [self.t4, self.t6], self.clocks))
+        self.assertFalse(cbr(self.dss1, {self.dss2}, [self.t4, self.t6], self.clocks))
 
     def test_cbr_true_w_invariants(self):
         self.dss1 = DoubleSymbolicState(self.autocon78.ContextLocationVector(["a", "d"]),
                                         self.c.getTautologyFederation())
         self.dss2 = DoubleSymbolicState(self.autocon78.ContextLocationVector(["c", "f"]),
                                         self.c.getTautologyFederation())
-        self.assertTrue(cbr(self.dss1, self.dss2, [self.t7, self.t8], self.clocks))
+        self.assertTrue(cbr(self.dss1, {self.dss2}, [self.t7, self.t8], self.clocks))
 
     def test_cbr_false_w_invariants(self):
         self.dss1 = DoubleSymbolicState(self.autocon79.ContextLocationVector(["a", "l"]),
                                         self.c.getTautologyFederation())
         self.dss2 = DoubleSymbolicState(self.autocon79.ContextLocationVector(["c", "n"]),
                                         self.c.getTautologyFederation())
-        self.assertFalse(cbr(self.dss1, self.dss2, [self.t7, self.t9], self.clocks))
+        self.assertFalse(cbr(self.dss1, {self.dss2}, [self.t7, self.t9], self.clocks))
 
     def test_cbr_false_unsync_guards(self):
         self.auto1 = TIOA(["a", "b"], "a", {self.c.x},
@@ -122,7 +122,7 @@ class double_symbolic_state_test(unittest.TestCase):
                                         self.c.getZeroFederation())
         self.dss2 = DoubleSymbolicState(self.autocontext.ContextLocationVector(["b", "d"]),
                                         self.c.getTautologyFederation())
-        self.assertFalse(cbr(self.dss1, self.dss2, [self.auto1, self.auto2], self.clocks))
+        self.assertFalse(cbr(self.dss1, {self.dss2}, [self.auto1, self.auto2], self.clocks))
 
     def test_cbr_true_sync_guards(self):
         self.auto1 = TIOA(["a", "b"], "a", {self.c.x},
@@ -134,21 +134,21 @@ class double_symbolic_state_test(unittest.TestCase):
                                     self.c.getZeroFederation())
         self.dss2 = DoubleSymbolicState(self.autocontext.ContextLocationVector(["b", "d"]),
                                     self.c.getTautologyFederation())
-        self.assertTrue(cbr(self.dss1, self.dss2, [self.auto1, self.auto2], self.clocks))
+        self.assertTrue(cbr(self.dss1, {self.dss2}, [self.auto1, self.auto2], self.clocks))
 
     def test_cbr_true1_w_loop(self):
         self.dss1 = DoubleSymbolicState(self.autocon1011.ContextLocationVector(["a", "d"]),
                                         self.c.getTautologyFederation())
         self.dss2 = DoubleSymbolicState(self.autocon1011.ContextLocationVector(["c", "f"]),
                                         self.c.getTautologyFederation())
-        self.assertTrue(cbr(self.dss1, self.dss2, [self.t10, self.t11], self.clocks))
+        self.assertTrue(cbr(self.dss1, {self.dss2}, [self.t10, self.t11], self.clocks))
 
     def test_cbr_true2_w_loop(self):
         self.dss1 = DoubleSymbolicState(self.autocon1012.ContextLocationVector(["a", "l"]),
                                         self.c.getTautologyFederation())
         self.dss2 = DoubleSymbolicState(self.autocon1012.ContextLocationVector(["c", "n"]),
                                         self.c.getTautologyFederation())
-        self.assertTrue(cbr(self.dss1, self.dss2, [self.t10, self.t12], self.clocks))
+        self.assertTrue(cbr(self.dss1, {self.dss2}, [self.t10, self.t12], self.clocks))
 
 if __name__ == '__main__':
             unittest.main()
