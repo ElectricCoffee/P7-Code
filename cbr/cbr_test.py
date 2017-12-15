@@ -161,16 +161,16 @@ class double_symbolic_state_test(unittest.TestCase):
         self.assertTrue(cbr(self.dss1, {self.dss2}, [self.t10, self.t12], self.clocks))
 
     def test_output_urgensy_false(self):
-        self.dss1 = DoubleSymbolicState(self.autocon1314.ContextLocationVector(["a", "e"]),
+        self.dss1 = DoubleSymbolicState(self.autocon1314.ContextLocationVector(["a", "*"]),
                                         self.c.getTautologyFederation())
-        self.dss2 = DoubleSymbolicState(self.autocon1314.ContextLocationVector(["d", "e"]),
+        self.dss2 = DoubleSymbolicState(self.autocon1314.ContextLocationVector(["d", "*"]),
                                         self.c.getTautologyFederation())
         self.assertFalse(cbr(self.dss1, {self.dss2}, [self.t13, self.t14], self.clocks))
 
     def test_output_urgensy(self):
-        self.dss1 = DoubleSymbolicState(self.autocon1413.ContextLocationVector(["e", "a"]),
+        self.dss1 = DoubleSymbolicState(self.autocon1413.ContextLocationVector(["*", "a"]),
                                         self.c.getTautologyFederation())
-        self.dss2 = DoubleSymbolicState(self.autocon1413.ContextLocationVector(["e", "d"]),
+        self.dss2 = DoubleSymbolicState(self.autocon1413.ContextLocationVector(["*", "d"]),
                                         self.c.getTautologyFederation())
         self.assertFalse(cbr(self.dss1, {self.dss2}, [self.t14, self.t13], self.clocks))
 
