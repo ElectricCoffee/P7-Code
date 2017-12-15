@@ -52,6 +52,14 @@ class double_symbolic_state_test(unittest.TestCase):
                        Edge("m", "h", Guard(cls.c, (cls.c['x'], 1, '>')), set(), "n"),
                        Edge("m", None, Guard(cls.c), set([cls.c['x']]), "m")], {"h"}, {"g"}, {})
 
+        cls.t13 = TIOA(["a", "b", "c", "d"], "a", set(cls.c.clocks),
+                       [Edge("a", "o", Guard(cls.c), set([cls.c["x"]]), "b"),
+                        Edge("b", "i", Guard(cls.c), set(), "c"),
+                        Edge("b", "0", Guard(cls.c, (cls.c['x'], 2, '>=')), set(), "d")
+                        ], {"o", "i"}, {}, {})
+        cls.t14 = TIOA(["e"], "e", set(cls.c.clocks),
+                       [Edge("d", "i", Guard(cls.c), set([cls.c["y"]]), "d")], {}, {"i"}, {"e":(cls.c.y <= 1)})
+
         cls.autocon12 = AutomataContext([cls.t1, cls.t2])
         cls.autocon13 = AutomataContext([cls.t1, cls.t3])
         cls.autocon45 = AutomataContext([cls.t4, cls.t5])
@@ -60,6 +68,7 @@ class double_symbolic_state_test(unittest.TestCase):
         cls.autocon79 = AutomataContext([cls.t7, cls.t9])
         cls.autocon1011 = AutomataContext([cls.t10, cls.t11])
         cls.autocon1012 = AutomataContext([cls.t10, cls.t12])
+        cls.autocon1314 = AutomataContext([cls.t13, cls.t14])
 
 
         cls.clocks = set()
@@ -149,6 +158,13 @@ class double_symbolic_state_test(unittest.TestCase):
         self.dss2 = DoubleSymbolicState(self.autocon1012.ContextLocationVector(["c", "n"]),
                                         self.c.getTautologyFederation())
         self.assertTrue(cbr(self.dss1, {self.dss2}, [self.t10, self.t12], self.clocks))
+
+    def test_output_urgensy(self):
+        self.dss1 = DoubleSymbolicState(self.autocon1314.ContextLocationVector(["a", "*"]),
+                                        self.c.getTautologyFederation())
+        self.dss2 = DoubleSymbolicState(self.autocon1314.ContextLocationVector(["d", "*"]),
+                                        self.c.getTautologyFederation())
+        self.assertFalse(cbr(self.dss1, {self.dss2}, [self.t13, self.t14], self.clocks))
 
 if __name__ == '__main__':
             unittest.main()
