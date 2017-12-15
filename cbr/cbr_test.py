@@ -159,12 +159,19 @@ class double_symbolic_state_test(unittest.TestCase):
                                         self.c.getTautologyFederation())
         self.assertTrue(cbr(self.dss1, {self.dss2}, [self.t10, self.t12], self.clocks))
 
-    def test_output_urgensy(self):
+    def test_output_urgensy_false(self):
         self.dss1 = DoubleSymbolicState(self.autocon1314.ContextLocationVector(["a", "*"]),
                                         self.c.getTautologyFederation())
         self.dss2 = DoubleSymbolicState(self.autocon1314.ContextLocationVector(["d", "*"]),
                                         self.c.getTautologyFederation())
         self.assertFalse(cbr(self.dss1, {self.dss2}, [self.t13, self.t14], self.clocks))
+
+    def test_output_urgensy(self):
+        self.dss1 = DoubleSymbolicState(self.autocon1314.ContextLocationVector(["e", "a"]),
+                                        self.c.getTautologyFederation())
+        self.dss2 = DoubleSymbolicState(self.autocon1314.ContextLocationVector(["e", "d"]),
+                                        self.c.getTautologyFederation())
+        self.assertFalse(cbr(self.dss1, {self.dss2}, [self.t14, self.t13], self.clocks))
 
 if __name__ == '__main__':
             unittest.main()
