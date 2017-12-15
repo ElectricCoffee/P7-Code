@@ -69,6 +69,7 @@ class double_symbolic_state_test(unittest.TestCase):
         cls.autocon1011 = AutomataContext([cls.t10, cls.t11])
         cls.autocon1012 = AutomataContext([cls.t10, cls.t12])
         cls.autocon1314 = AutomataContext([cls.t13, cls.t14])
+        cls.autocon1413 = AutomataContext([cls.t14, cls.t13])
 
 
         cls.clocks = set()
@@ -167,9 +168,9 @@ class double_symbolic_state_test(unittest.TestCase):
         self.assertFalse(cbr(self.dss1, {self.dss2}, [self.t13, self.t14], self.clocks))
 
     def test_output_urgensy(self):
-        self.dss1 = DoubleSymbolicState(self.autocon1314.ContextLocationVector(["e", "a"]),
+        self.dss1 = DoubleSymbolicState(self.autocon1413.ContextLocationVector(["e", "a"]),
                                         self.c.getTautologyFederation())
-        self.dss2 = DoubleSymbolicState(self.autocon1314.ContextLocationVector(["e", "d"]),
+        self.dss2 = DoubleSymbolicState(self.autocon1413.ContextLocationVector(["e", "d"]),
                                         self.c.getTautologyFederation())
         self.assertFalse(cbr(self.dss1, {self.dss2}, [self.t14, self.t13], self.clocks))
 
